@@ -20,6 +20,8 @@ import '../../features/login/data/data_sources/login_remote_data_source_contract
 import '../../features/login/data/repo/login_repo_impl.dart' as _i176;
 import '../../features/login/domain/repo/login_repo_contract.dart' as _i180;
 import '../../features/login/domain/use_cases/login_usecase.dart' as _i538;
+import '../../features/login/presentaion/view_model/login_view_model.dart'
+    as _i355;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -36,6 +38,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i538.LoginUsecase>(
       () => _i538.LoginUsecase(gh<_i180.LoginRepoContract>()),
+    );
+    gh.factory<_i355.LoginViewModel>(
+      () => _i355.LoginViewModel(gh<_i538.LoginUsecase>()),
     );
     return this;
   }
