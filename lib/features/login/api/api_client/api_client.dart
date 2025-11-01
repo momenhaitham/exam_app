@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:exam_app_project/core/app_endpoints.dart';
+import 'package:injectable/injectable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -7,10 +8,12 @@ import '../../data/models/log_dto.dart';
 
 part 'api_client.g.dart';
 
-@RestApi(baseUrl:AppEndpoints.baseUrl)
+@injectable
+@RestApi()
 abstract class LoginApiClient {
-  factory LoginApiClient(Dio dio, {String? baseUrl}) = _LoginApiClient;
+  @factoryMethod
+  factory LoginApiClient(Dio dio) = _LoginApiClient;
 
-  @GET(AppEndpoints.LoginEndpoint)
-  Future<LoginDto> Login(@Query("email") String email, @Query("password") String password,);
+  @POST(AppEndpoints.LoginEndpoint)
+  Future<LoginDto> Login(@Body() Map<String, dynamic> body);
 }
