@@ -12,7 +12,7 @@ class LoginRemoteDateSourceImpl implements LoginRemoteDataSourceContract{
   @override
   Future<BaseResponse<LoginDto>> Login(String email, String password) async{
     try{
-      LoginDto loginResponse = await loginApiClient.Login(email, password);
+      LoginDto loginResponse = await loginApiClient.Login({"email":email,"password":password});
       return SuccessResponse<LoginDto>(data: loginResponse);
     }catch(e){
       return ErrorResponse<LoginDto>(error: e as Exception);

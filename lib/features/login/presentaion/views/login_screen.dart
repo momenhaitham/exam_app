@@ -2,8 +2,10 @@ import 'package:exam_app_project/config/Di/di.dart';
 import 'package:exam_app_project/core/app_colors.dart';
 import 'package:exam_app_project/core/app_strings.dart';
 import 'package:exam_app_project/core/app_styles.dart';
+import 'package:exam_app_project/features/login/presentaion/view_model/login_events.dart';
 import 'package:exam_app_project/features/login/presentaion/view_model/login_states.dart';
 import 'package:exam_app_project/features/login/presentaion/view_model/login_view_model.dart';
+import 'package:exam_app_project/reuseable_widgets/show_dialog_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,7 +15,7 @@ class LoginScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     var validate=GlobalKey<FormState>();
-    String? email;
+    
     return BlocProvider<LoginViewModel>(
       create: (context) => loginViewModel,
       child: BlocConsumer<LoginViewModel,LoginStates>(builder: (context, state) {
@@ -52,7 +54,7 @@ class LoginScreen extends StatelessWidget{
                       }
                     },
                     onChanged: (value) {
-                      email=value;
+                      loginViewModel.enteredEmail=value;
                     },
                   ),
                   SizedBox(height:24.h,),
@@ -78,7 +80,7 @@ class LoginScreen extends StatelessWidget{
                       }
                     },
                     onChanged: (value) {
-                      email=value;
+                      loginViewModel.enteredPassword=value;
                     },
                   ),
                   SizedBox(height:2.h,),
@@ -97,7 +99,11 @@ class LoginScreen extends StatelessWidget{
                     width: double.infinity,
                     height: 48.h,
                     child: ElevatedButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        if(validate.currentState?.validate()==true){
+                        loginViewModel.DoIntent(LoginEvent(),email:loginViewModel.enteredEmail!,password:loginViewModel.enteredPassword! );
+                        }
+                      },
                       child: Text(AppStrings.login,style: AppStyles.Medium16White,),
                       style: ElevatedButton.styleFrom(backgroundColor:AppColors.blue )),
                   )
@@ -110,7 +116,15 @@ class LoginScreen extends StatelessWidget{
       ),);
     },
     listener: (context, state) {
-      
+      if(state.loginState?.isLoading==true){
+        ShowDialogUtils.ShowLoading(context);
+      }else if (state.loginState?.errorMessage!=null){
+        ShowDialogUtils.HideLoading(context);
+        ShowDialogUtils.ShowMessage(context, Title: state.loginState?.errorMessage);
+      }else if (state.loginState?.data!=null){
+        ShowDialogUtils.HideLoading(context);
+        ShowDialogUtils.ShowMessage(context, Title: state.loginState?.data?.massage);
+      }
         
     },)) ;
   }

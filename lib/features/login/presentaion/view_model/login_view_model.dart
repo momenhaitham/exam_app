@@ -11,7 +11,8 @@ import 'package:injectable/injectable.dart';
 class LoginViewModel extends Cubit<LoginStates>{
   LoginViewModel(this._login):super(LoginStates());
   LoginUsecase _login;
-
+  String? enteredEmail;
+  String? enteredPassword;
 
   void DoIntent(LoginEvents event,{String email = "",String password = "" }){
     switch (event){
