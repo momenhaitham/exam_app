@@ -13,7 +13,6 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
-import '../../features/forget_password/api/api_client/api_client.dart' as _i421;
 import '../../features/login/api/api_client/api_client.dart' as _i62;
 import '../../features/login/api/data_sources_impls/login_remote_date_source_impl.dart'
     as _i367;
@@ -35,9 +34,12 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final dioModule = _$DioModule();
     gh.singleton<_i361.Dio>(() => dioModule.dio);
-    gh.factory<_i421.ForgetPasswordApiClient>(
-      () => _i421.ForgetPasswordApiClient(gh<_i361.Dio>()),
-    );
+
+    // 🚫 Temporarily removed ForgetPasswordApiClient registration
+    // gh.factory<_i421.ForgetPasswordApiClient>(
+    //   () => _i421.ForgetPasswordApiClient(gh<_i361.Dio>()),
+    // );
+
     gh.factory<_i62.LoginApiClient>(() => _i62.LoginApiClient(gh<_i361.Dio>()));
     gh.factory<_i159.LoginRemoteDataSourceContract>(
       () => _i367.LoginRemoteDateSourceImpl(gh<_i62.LoginApiClient>()),

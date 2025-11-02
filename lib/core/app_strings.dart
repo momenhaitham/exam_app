@@ -10,4 +10,9 @@ class AppStrings {
   static String youMustEnterYourEmail = "you must enter your email";
   static String youMustEnterYourPassword = "you must enter your Password";
   static String NotValidPassword = "The Password is not valid";
+  static String Continue = "Continue ";
+  static String emailVerification = "Email verification";
+  static String ResetPassword = "Reset Password";
+  static String NewPassword = "New Password";
+  static String ConfirmPassword = "Confirm Password";
 }
