@@ -2,6 +2,7 @@ import 'package:exam_app_project/config/Di/di.dart';
 import 'package:exam_app_project/core/app_routes.dart';
 import 'package:exam_app_project/core/app_theme.dart';
 import 'package:exam_app_project/features/login/presentaion/views/login_screen.dart';
+import 'package:exam_app_project/features/login/presentaion/views/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -22,10 +23,12 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: Size(375, 812),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: AppTheme.Theme,
-        initialRoute: AppRoutes.LoginScreenRoute,
+        initialRoute: AppRoutes.signupScreenRoute,
         routes: {
           AppRoutes.LoginScreenRoute : (context)=>LoginScreen(),
+          AppRoutes.signupScreenRoute : (context)=>SignupScreen(),
         },
       ),
     );

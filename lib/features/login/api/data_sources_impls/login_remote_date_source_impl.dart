@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 @Injectable(as:LoginRemoteDataSourceContract)
 class LoginRemoteDateSourceImpl implements LoginRemoteDataSourceContract{
 
-  LoginApiClient loginApiClient;
+  ApiClient loginApiClient;
   LoginRemoteDateSourceImpl(this.loginApiClient);
 
   @override
