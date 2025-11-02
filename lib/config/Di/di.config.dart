@@ -13,6 +13,19 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../features/forget_password/api/api_client/api_client.dart' as _i421;
+import '../../features/forget_password/api/data_sources_impls/forget_password_remote_datasource_impl.dart'
+    as _i306;
+import '../../features/forget_password/data/data_sources/forget_password_remote_datasource_contract.dart'
+    as _i997;
+import '../../features/forget_password/data/repo/forget_password_repo_impl.dart'
+    as _i576;
+import '../../features/forget_password/domain/repo/forget_password_repo_contract.dart'
+    as _i665;
+import '../../features/forget_password/domain/use_cases/forget_password_usecase.dart'
+    as _i559;
+import '../../features/forget_password/domain/use_cases/Virefy_reset_code_usecase.dart'
+    as _i998;
 import '../../features/login/api/api_client/api_client.dart' as _i62;
 import '../../features/login/api/data_sources_impls/login_remote_date_source_impl.dart'
     as _i367;
@@ -34,15 +47,29 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final dioModule = _$DioModule();
     gh.singleton<_i361.Dio>(() => dioModule.dio);
-
-    // 🚫 Temporarily removed ForgetPasswordApiClient registration
-    // gh.factory<_i421.ForgetPasswordApiClient>(
-    //   () => _i421.ForgetPasswordApiClient(gh<_i361.Dio>()),
-    // );
-
+    gh.factory<_i421.ForgetPasswordApiClient>(
+      () => _i421.ForgetPasswordApiClient(gh<_i361.Dio>()),
+    );
     gh.factory<_i62.LoginApiClient>(() => _i62.LoginApiClient(gh<_i361.Dio>()));
     gh.factory<_i159.LoginRemoteDataSourceContract>(
       () => _i367.LoginRemoteDateSourceImpl(gh<_i62.LoginApiClient>()),
+    );
+    gh.factory<_i997.ForgetPasswordRemoteDatasourceContract>(
+      () => _i306.ForgetPasswordRemoteDatasourceImpl(
+        gh<_i421.ForgetPasswordApiClient>(),
+      ),
+    );
+    gh.factory<_i665.ForgetPasswordRepoContract>(
+      () => _i576.ForgetPasswordRepoImpl(
+        gh<_i997.ForgetPasswordRemoteDatasourceContract>(),
+      ),
+    );
+    gh.factory<_i998.VirefyResetCodeUsecase>(
+      () =>
+          _i998.VirefyResetCodeUsecase(gh<_i665.ForgetPasswordRepoContract>()),
+    );
+    gh.factory<_i559.ForgetPasswordUsecase>(
+      () => _i559.ForgetPasswordUsecase(gh<_i665.ForgetPasswordRepoContract>()),
     );
     gh.factory<_i180.LoginRepoContract>(
       () => _i176.LoginRepoImpl(gh<_i159.LoginRemoteDataSourceContract>()),
