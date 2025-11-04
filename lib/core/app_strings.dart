@@ -15,4 +15,7 @@ class AppStrings {
   static String ResetPassword = "Reset Password";
   static String NewPassword = "New Password";
   static String ConfirmPassword = "Confirm Password";
+  static String passwordDoesntMatch = "Password Doesn't Match";
+  static String passwordSuccessfulyChanged = "Password Successfuly Changed";
+
 }

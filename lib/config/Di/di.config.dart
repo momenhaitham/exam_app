@@ -24,8 +24,12 @@ import '../../features/forget_password/domain/repo/forget_password_repo_contract
     as _i665;
 import '../../features/forget_password/domain/use_cases/forget_password_usecase.dart'
     as _i559;
+import '../../features/forget_password/domain/use_cases/reset_password_usecase.dart'
+    as _i907;
 import '../../features/forget_password/domain/use_cases/Virefy_reset_code_usecase.dart'
     as _i998;
+import '../../features/forget_password/presentaion/view_model/forget_password_view_model.dart'
+    as _i171;
 import '../../features/login/api/api_client/api_client.dart' as _i62;
 import '../../features/login/api/data_sources_impls/login_remote_date_source_impl.dart'
     as _i367;
@@ -64,12 +68,22 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i997.ForgetPasswordRemoteDatasourceContract>(),
       ),
     );
-    gh.factory<_i998.VirefyResetCodeUsecase>(
+    gh.lazySingleton<_i998.VirefyResetCodeUsecase>(
       () =>
           _i998.VirefyResetCodeUsecase(gh<_i665.ForgetPasswordRepoContract>()),
     );
-    gh.factory<_i559.ForgetPasswordUsecase>(
+    gh.lazySingleton<_i559.ForgetPasswordUsecase>(
       () => _i559.ForgetPasswordUsecase(gh<_i665.ForgetPasswordRepoContract>()),
+    );
+    gh.lazySingleton<_i907.ResetPasswordUsecase>(
+      () => _i907.ResetPasswordUsecase(gh<_i665.ForgetPasswordRepoContract>()),
+    );
+    gh.factory<_i171.ForgetPasswordViewModel>(
+      () => _i171.ForgetPasswordViewModel(
+        gh<_i559.ForgetPasswordUsecase>(),
+        gh<_i907.ResetPasswordUsecase>(),
+        gh<_i998.VirefyResetCodeUsecase>(),
+      ),
     );
     gh.factory<_i180.LoginRepoContract>(
       () => _i176.LoginRepoImpl(gh<_i159.LoginRemoteDataSourceContract>()),

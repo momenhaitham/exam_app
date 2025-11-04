@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       designSize: Size(375, 812),
       child: MaterialApp(
         theme: AppTheme.Theme,
-        initialRoute: AppRoutes.EmailVerificationScreenRoute,
+        initialRoute: AppRoutes.LoginScreenRoute,
         routes: {
           AppRoutes.LoginScreenRoute: (context) => LoginScreen(),
           AppRoutes.ForgetPasswordScreenRoute: (context) =>
