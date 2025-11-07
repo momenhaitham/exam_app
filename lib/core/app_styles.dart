@@ -8,6 +8,8 @@ class AppStyles {
   static const TextStyle ragular16Gray = TextStyle(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.w400);
   static const TextStyle ragular16Black = TextStyle(color: AppColors.black,fontSize: 16,fontWeight: FontWeight.w400);
   static const TextStyle Medium16White = TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.w500);
+  static const TextStyle Medium16Blue = TextStyle(color: AppColors.blue,fontSize: 16,fontWeight: FontWeight.w500);
+  static const TextStyle Medium16Gray = TextStyle(color: Colors.grey,fontSize: 16,fontWeight: FontWeight.w500);
 
 
 }
