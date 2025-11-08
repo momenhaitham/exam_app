@@ -11,13 +11,17 @@ import 'package:injectable/injectable.dart';
 class LoginViewModel extends Cubit<LoginStates>{
   LoginViewModel(this._login):super(LoginStates());
   LoginUsecase _login;
+  String? enteredEmail;
+  String? enteredPassword;
+  int rememberMeChickBox = 0;
 
-
-  void DoIntent(LoginEvents event,{String email = "",String password = "" }){
+  void DoIntent(LoginEvents event,{String email = "",String password = "",int RememberMeChickBoxValue = 0}){
     switch (event){
       
       case LoginEvent():
         _Login(email, password);
+      case RememberMeEvent():
+        _RememberMeChickBox(RememberMeChickBoxValue);
     }
   }
 
@@ -32,5 +36,15 @@ class LoginViewModel extends Cubit<LoginStates>{
         String errorMassege = loginResponse.error.toString();
         emit(state.copyWith(loginStateParam: BaseState<LoginModel>(errorMessage: errorMassege ,isLoading: false)));
     }
+  }
+
+  void _RememberMeChickBox(int value){
+
+    if(rememberMeChickBox==0){
+      rememberMeChickBox=1;
+    }else if (rememberMeChickBox == 1){
+      rememberMeChickBox=0;
+    }
+    emit(state.copyWith());
   }
 }

@@ -1,8 +1,8 @@
 import 'package:exam_app_project/config/base_response/base_response.dart';
 import 'package:exam_app_project/config/base_state/base_state.dart';
-import 'package:exam_app_project/features/login/domain/use_cases/signup_usecase.dart';
-import 'package:exam_app_project/features/login/presentaion/view_model/signup_events.dart';
-import 'package:exam_app_project/features/login/presentaion/view_model/signup_states.dart';
+import 'package:exam_app_project/features/signup/domain/use_cases/signup_usecase.dart';
+import 'package:exam_app_project/features/signup/presentation/vie_model/signup_events.dart';
+import 'package:exam_app_project/features/signup/presentation/vie_model/signup_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';

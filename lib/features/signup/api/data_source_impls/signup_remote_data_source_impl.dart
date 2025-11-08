@@ -1,12 +1,13 @@
 import 'package:exam_app_project/config/base_response/base_response.dart';
 import 'package:exam_app_project/features/login/api/api_client/api_client.dart';
-import 'package:exam_app_project/features/login/data/data_sources/signup_remote_data_source_contract.dart';
-import 'package:exam_app_project/features/login/data/models/signup_dto.dart';
+import 'package:exam_app_project/features/signup/api/api_client/api_client.dart';
+import 'package:exam_app_project/features/signup/data/data_sources/signup_remote_data_source_contract.dart';
+import 'package:exam_app_project/features/signup/data/models/signup_dto.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as:SignupRemoteDataSourceContract)
 class SignupRemoteDataSourceImpl implements SignupRemoteDataSourceContract {
-  ApiClient signupApiClient;
+  SignupApiClient signupApiClient;
   SignupRemoteDataSourceImpl(this.signupApiClient);
 
   @override

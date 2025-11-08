@@ -1,8 +1,8 @@
 import 'package:exam_app_project/config/base_response/base_response.dart';
-import 'package:exam_app_project/features/login/data/data_sources/signup_remote_data_source_contract.dart';
-import 'package:exam_app_project/features/login/data/models/signup_dto.dart';
-import 'package:exam_app_project/features/login/domain/models/signup_model.dart';
-import 'package:exam_app_project/features/login/domain/repo/signup_repo_contract.dart';
+import 'package:exam_app_project/features/signup/data/data_sources/signup_remote_data_source_contract.dart';
+import 'package:exam_app_project/features/signup/data/models/signup_dto.dart';
+import 'package:exam_app_project/features/signup/domain/models/signup_model.dart';
+import 'package:exam_app_project/features/signup/domain/repo/signup_repo_contract.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as:SignupRepoContract)

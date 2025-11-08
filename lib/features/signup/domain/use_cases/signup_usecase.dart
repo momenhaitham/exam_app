@@ -1,6 +1,6 @@
 import 'package:exam_app_project/config/base_response/base_response.dart';
-import 'package:exam_app_project/features/login/domain/models/signup_model.dart';
-import 'package:exam_app_project/features/login/domain/repo/signup_repo_contract.dart';
+import 'package:exam_app_project/features/signup/domain/models/signup_model.dart';
+import 'package:exam_app_project/features/signup/domain/repo/signup_repo_contract.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable

@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:exam_app_project/features/login/api/api_client/api_client.dart';
+import 'package:exam_app_project/core/app_endpoints.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+
+
 @module
 abstract class DioModule {
   @factoryMethod
@@ -10,6 +12,7 @@ abstract class DioModule {
     dio.options = BaseOptions(
       connectTimeout: const Duration(seconds: 180),
       receiveTimeout: const Duration(seconds: 180),
+      baseUrl: AppEndpoints.baseUrl,
       validateStatus: (_) {
         return true;
       },
@@ -19,8 +22,6 @@ abstract class DioModule {
   }
 
 
-  @singleton
-  ApiClient apiClient(Dio dio) => ApiClient(dio);
 
 
 

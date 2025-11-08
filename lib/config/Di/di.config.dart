@@ -14,25 +14,43 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 
+import '../../features/forget_password/api/api_client/api_client.dart' as _i421;
+import '../../features/forget_password/api/data_sources_impls/forget_password_remote_datasource_impl.dart'
+    as _i306;
+import '../../features/forget_password/data/data_sources/forget_password_remote_datasource_contract.dart'
+    as _i997;
+import '../../features/forget_password/data/repo/forget_password_repo_impl.dart'
+    as _i576;
+import '../../features/forget_password/domain/repo/forget_password_repo_contract.dart'
+    as _i665;
+import '../../features/forget_password/domain/use_cases/forget_password_usecase.dart'
+    as _i559;
+import '../../features/forget_password/domain/use_cases/reset_password_usecase.dart'
+    as _i907;
+import '../../features/forget_password/domain/use_cases/Virefy_reset_code_usecase.dart'
+    as _i998;
+import '../../features/forget_password/presentaion/view_model/forget_password_view_model.dart'
+    as _i171;
 import '../../features/login/api/api_client/api_client.dart' as _i62;
 import '../../features/login/api/data_sources_impls/login_remote_date_source_impl.dart'
     as _i367;
-import '../../features/login/api/data_sources_impls/signup_remote_data_source_impl.dart'
-    as _i337;
 import '../../features/login/data/data_sources/login_remote_data_source_contract.dart'
     as _i159;
-import '../../features/login/data/data_sources/signup_remote_data_source_contract.dart'
-    as _i482;
 import '../../features/login/data/repo/login_repo_impl.dart' as _i176;
-import '../../features/login/data/repo/signup_repo_impl.dart' as _i163;
 import '../../features/login/domain/repo/login_repo_contract.dart' as _i180;
-import '../../features/login/domain/repo/signup_repo_contract.dart' as _i485;
 import '../../features/login/domain/use_cases/login_usecase.dart' as _i538;
-import '../../features/login/domain/use_cases/signup_usecase.dart' as _i19;
 import '../../features/login/presentaion/view_model/login_view_model.dart'
     as _i355;
-import '../../features/login/presentaion/view_model/signup_view_model.dart'
-    as _i435;
+import '../../features/signup/api/api_client/api_client.dart' as _i334;
+import '../../features/signup/api/data_source_impls/signup_remote_data_source_impl.dart'
+    as _i825;
+import '../../features/signup/data/data_sources/signup_remote_data_source_contract.dart'
+    as _i106;
+import '../../features/signup/data/repo/signup_repo_impl.dart' as _i868;
+import '../../features/signup/domain/repo/signup_repo_contract.dart' as _i677;
+import '../../features/signup/domain/use_cases/signup_usecase.dart' as _i25;
+import '../../features/signup/presentation/vie_model/signup_view_model.dart'
+    as _i560;
 import '../dio_module/dio_module.dart' as _i773;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -45,30 +63,63 @@ extension GetItInjectableX on _i174.GetIt {
     final dioModule = _$DioModule();
     gh.factory<_i361.Dio>(() => dioModule.provideDio());
     gh.factory<_i528.PrettyDioLogger>(() => dioModule.dioLogger());
-    gh.singleton<_i62.ApiClient>(() => dioModule.apiClient(gh<_i361.Dio>()));
-    gh.factory<_i482.SignupRemoteDataSourceContract>(
-      () => _i337.SignupRemoteDataSourceImpl(gh<_i62.ApiClient>()),
+    gh.factory<_i421.ForgetPasswordApiClient>(
+      () => _i421.ForgetPasswordApiClient(gh<_i361.Dio>()),
+    );
+    gh.factory<_i62.LoginApiClient>(() => _i62.LoginApiClient(gh<_i361.Dio>()));
+    gh.factory<_i334.SignupApiClient>(
+      () => _i334.SignupApiClient(gh<_i361.Dio>()),
+    );
+    gh.factory<_i106.SignupRemoteDataSourceContract>(
+      () => _i825.SignupRemoteDataSourceImpl(gh<_i334.SignupApiClient>()),
     );
     gh.factory<_i159.LoginRemoteDataSourceContract>(
-      () => _i367.LoginRemoteDateSourceImpl(gh<_i62.ApiClient>()),
+      () => _i367.LoginRemoteDateSourceImpl(gh<_i62.LoginApiClient>()),
+    );
+    gh.factory<_i997.ForgetPasswordRemoteDatasourceContract>(
+      () => _i306.ForgetPasswordRemoteDatasourceImpl(
+        gh<_i421.ForgetPasswordApiClient>(),
+      ),
+    );
+    gh.factory<_i665.ForgetPasswordRepoContract>(
+      () => _i576.ForgetPasswordRepoImpl(
+        gh<_i997.ForgetPasswordRemoteDatasourceContract>(),
+      ),
+    );
+    gh.factory<_i677.SignupRepoContract>(
+      () => _i868.SignupRepoImpl(gh<_i106.SignupRemoteDataSourceContract>()),
+    );
+    gh.lazySingleton<_i998.VirefyResetCodeUsecase>(
+      () =>
+          _i998.VirefyResetCodeUsecase(gh<_i665.ForgetPasswordRepoContract>()),
+    );
+    gh.lazySingleton<_i559.ForgetPasswordUsecase>(
+      () => _i559.ForgetPasswordUsecase(gh<_i665.ForgetPasswordRepoContract>()),
+    );
+    gh.lazySingleton<_i907.ResetPasswordUsecase>(
+      () => _i907.ResetPasswordUsecase(gh<_i665.ForgetPasswordRepoContract>()),
+    );
+    gh.factory<_i171.ForgetPasswordViewModel>(
+      () => _i171.ForgetPasswordViewModel(
+        gh<_i559.ForgetPasswordUsecase>(),
+        gh<_i907.ResetPasswordUsecase>(),
+        gh<_i998.VirefyResetCodeUsecase>(),
+      ),
     );
     gh.factory<_i180.LoginRepoContract>(
       () => _i176.LoginRepoImpl(gh<_i159.LoginRemoteDataSourceContract>()),
     );
-    gh.factory<_i485.SignupRepoContract>(
-      () => _i163.SignupRepoImpl(gh<_i482.SignupRemoteDataSourceContract>()),
-    );
     gh.factory<_i538.LoginUsecase>(
       () => _i538.LoginUsecase(gh<_i180.LoginRepoContract>()),
     );
-    gh.factory<_i19.SignupUsecase>(
-      () => _i19.SignupUsecase(gh<_i485.SignupRepoContract>()),
+    gh.factory<_i25.SignupUsecase>(
+      () => _i25.SignupUsecase(gh<_i677.SignupRepoContract>()),
     );
     gh.factory<_i355.LoginViewModel>(
       () => _i355.LoginViewModel(gh<_i538.LoginUsecase>()),
     );
-    gh.factory<_i435.SignupViewModel>(
-      () => _i435.SignupViewModel(gh<_i19.SignupUsecase>()),
+    gh.factory<_i560.SignupViewModel>(
+      () => _i560.SignupViewModel(gh<_i25.SignupUsecase>()),
     );
     return this;
   }

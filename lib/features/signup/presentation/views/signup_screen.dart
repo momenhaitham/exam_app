@@ -3,10 +3,11 @@ import 'package:exam_app_project/config/Di/di.dart';
 import 'package:exam_app_project/core/app_colors.dart';
 import 'package:exam_app_project/core/app_routes.dart';
 import 'package:exam_app_project/core/app_strings.dart';
+import 'package:exam_app_project/core/app_validators.dart';
 import 'package:exam_app_project/core/signup_validation.dart';
-import 'package:exam_app_project/features/login/presentaion/view_model/signup_events.dart';
-import 'package:exam_app_project/features/login/presentaion/view_model/signup_states.dart';
-import 'package:exam_app_project/features/login/presentaion/view_model/signup_view_model.dart';
+import 'package:exam_app_project/features/signup/presentation/vie_model/signup_events.dart';
+import 'package:exam_app_project/features/signup/presentation/vie_model/signup_states.dart';
+import 'package:exam_app_project/features/signup/presentation/vie_model/signup_view_model.dart';
 import 'package:exam_app_project/reuseable_widgets/custm_elevated_button.dart';
 import 'package:exam_app_project/reuseable_widgets/show_dialog.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +72,7 @@ class SignupScreen extends StatelessWidget {
                       hint: AppStrings.EnterYourEmail,
                       controller: signupViewModel.emailController,
                       validator: (value) {
-                        return SignupValidation.emailValidator(value);
+                        return AppValidators.ValidateEmail(value);
                       },
                     ),
                     SizedBox(height: 20.h),
@@ -82,6 +83,9 @@ class SignupScreen extends StatelessWidget {
                             label: AppStrings.password,
                             hint: AppStrings.EnterYourPassword,
                             controller: signupViewModel.passwordController,
+                            validator: (value){
+                              return AppValidators.ValidatePassword(value);
+                            }
                           ),
                         ),
                         SizedBox(width: 16.h),

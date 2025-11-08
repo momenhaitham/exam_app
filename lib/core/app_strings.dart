@@ -1,8 +1,26 @@
 class AppStrings {
-  static String login = "Login";
+  static const login = "Login";
+  static const String email = "Email";
+  static const String EnterYourEmail = "Enter Your Email";
+  static const String password = "Password";
+  static const String EnterYourPassword = "Enter Your Password";
+  static const String RememberMe = "Remember me";
+  static const String ForgetPass = "Forget Password ?";
+  static const String NotValidEmail = "The email is not valid";
+  static const String youMustEnterYourEmail = "you must enter your email";
+  static const String youMustEnterYourPassword = "you must enter your Password";
+  static const String NotValidPassword = "The Password is not valid";
+  static const String Continue = "Continue ";
+  static const String emailVerification = "Email verification";
+  static const String ResetPassword = "Reset Password";
+  static const String NewPassword = "New Password";
+  static const String ConfirmPassword = "Confirm Password";
+  static const String passwordDoesntMatch = "Password Doesn't Match";
+  static const String passwordSuccessfulyChanged = "Password Successfuly Changed";
+  static const String dontHaveAnAccount = "Don't have an account ?";
+  static const String signUp = "Sign Up";
+
   static String signup = "Signup";
-  static String email = "Email";
-  static String EnterYourEmail = "Enter Your Email";
   static String enterYourUserName = "Enter your user name";
   static String username = "User name";
   static String firstName = "First name";
@@ -11,17 +29,9 @@ class AppStrings {
   static String enterYourLastName = "Enter your last name";
   static String phoneNumber = "Phone number";
   static String enterYourPhoneNumber = "Enter your phone number";
-  static String password = "Password";
-  static String EnterYourPassword = "Enter Your Password";
   static String confirmPassword = "Confirm password";
-  static String RememberMe = "Remember me";
-  static String ForgetPass = "Forget Password ?";
-  static String NotValidEmail = "The email is not valid";
   static String passwordNotMatched = "Password not matched";
   static String notValidUserName = "This user name is not valid";
-  static String youMustEnterYourEmail = "you must enter your email";
-  static String youMustEnterYourPassword = "you must enter your Password";
-  static String NotValidPassword = "The Password is not valid";
   static String signupAppBarTitle = "Sign Up";
   static String alreadyHaveAnAccount = "Already have an account?";
 }

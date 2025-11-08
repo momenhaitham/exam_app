@@ -33,7 +33,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   retrofit: ^4.6.0
   json_annotation: ^4.9.0
-  injectable:  
+  injectable: ^2.6.0  
   # add get_it  
   get_it:  
   flutter_bloc: ^9.1.1
@@ -42,6 +42,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   pretty_dio_logger: ^1.4.0
+  pin_code_fields: ^8.0.1
 
 dev_dependencies:
   flutter_test:
