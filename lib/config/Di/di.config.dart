@@ -12,6 +12,7 @@
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 
 import '../../features/login/api/api_client/api_client.dart' as _i62;
 import '../../features/login/api/data_sources_impls/login_remote_date_source_impl.dart'
@@ -42,7 +43,8 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final dioModule = _$DioModule();
-    gh.singleton<_i361.Dio>(() => dioModule.dio);
+    gh.factory<_i361.Dio>(() => dioModule.provideDio());
+    gh.factory<_i528.PrettyDioLogger>(() => dioModule.dioLogger());
     gh.singleton<_i62.ApiClient>(() => dioModule.apiClient(gh<_i361.Dio>()));
     gh.factory<_i482.SignupRemoteDataSourceContract>(
       () => _i337.SignupRemoteDataSourceImpl(gh<_i62.ApiClient>()),
