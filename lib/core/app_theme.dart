@@ -1,4 +1,5 @@
 import 'package:exam_app_project/core/app_colors.dart';
+import 'package:exam_app_project/core/app_styles.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
@@ -23,7 +24,16 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(100))
         )
-      )
+      ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      type: BottomNavigationBarType.fixed,
+      showUnselectedLabels: true,
+      selectedLabelStyle: AppStyles.Medium16Blue,
+      unselectedLabelStyle: AppStyles.Medium16Gray,
+    ),
+    bottomAppBarTheme: BottomAppBarTheme(
+      color: AppColors.white
+    ),
     );
   
 }

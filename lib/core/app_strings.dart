@@ -19,5 +19,8 @@ class AppStrings {
   static const String passwordSuccessfulyChanged = "Password Successfuly Changed";
   static const String dontHaveAnAccount = "Don't have an account ?";
   static const String signUp = "Sign Up";
+  static const String explore = "Explore";
+  static const String result = "Result";
+  static const String profile = "Profile";
 
 }
