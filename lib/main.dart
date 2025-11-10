@@ -4,6 +4,7 @@ import 'package:exam_app_project/core/app_theme.dart';
 import 'package:exam_app_project/features/forget_password/presentaion/views/email_verfication_screen.dart';
 import 'package:exam_app_project/features/forget_password/presentaion/views/forget_password_screen.dart';
 import 'package:exam_app_project/features/forget_password/presentaion/views/reset_password_screen.dart';
+import 'package:exam_app_project/features/home_screen/presentaion/views/home_screen.dart';
 import 'package:exam_app_project/features/login/presentaion/views/login_screen.dart';
 import 'package:exam_app_project/features/signup/presentation/views/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.Theme,
-        initialRoute: AppRoutes.LoginScreenRoute,
+        initialRoute: AppRoutes.HomeScreenRoute,
         routes: {
           AppRoutes.LoginScreenRoute : (context)=>LoginScreen(),
           AppRoutes.signupScreenRoute : (context)=>SignupScreen(),
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
               EmailVerficationScreen(),
           AppRoutes.ResetPasswordScreenRoute: (context) =>
               ResetPasswordScreen(),
+          AppRoutes.HomeScreenRoute:(context)=>
+              HomeScreen(),
+          
         },
       ),
     );
