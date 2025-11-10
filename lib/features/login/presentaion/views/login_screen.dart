@@ -113,13 +113,40 @@ class LoginScreen extends StatelessWidget{
                 
                   },),
               SizedBox(height: 16.h,),
-              Center(child: RichText(text: TextSpan(
-                children: [
-                  TextSpan(text: AppStrings.dontHaveAnAccount,style: AppStyles.ragular16Black),
-                  TextSpan(text: AppStrings.signUp,style: AppStyles.ragular16Black.copyWith(color: AppColors.blue,decoration: TextDecoration.underline)),
-                ]
-              ),),)
-            ],
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: AppStrings.dontHaveAnAccount,
+                        style: AppStyles.ragular16Black,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 4), // small spacing between texts
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(AppRoutes.signupScreenRoute);
+                  },
+                  child: Text(
+                    AppStrings.signUp,
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: AppColors.blue,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+
+          ],
           ),
         ),
       )) ;

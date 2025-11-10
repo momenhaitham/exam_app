@@ -12,6 +12,7 @@
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 
 import '../../features/explore_tab/subjects_screen/api/api_client/api_client.dart'
     as _i656;
@@ -54,6 +55,16 @@ import '../../features/login/domain/repo/login_repo_contract.dart' as _i180;
 import '../../features/login/domain/use_cases/login_usecase.dart' as _i538;
 import '../../features/login/presentaion/view_model/login_view_model.dart'
     as _i355;
+import '../../features/signup/api/api_client/api_client.dart' as _i334;
+import '../../features/signup/api/data_source_impls/signup_remote_data_source_impl.dart'
+    as _i825;
+import '../../features/signup/data/data_sources/signup_remote_data_source_contract.dart'
+    as _i106;
+import '../../features/signup/data/repo/signup_repo_impl.dart' as _i868;
+import '../../features/signup/domain/repo/signup_repo_contract.dart' as _i677;
+import '../../features/signup/domain/use_cases/signup_usecase.dart' as _i25;
+import '../../features/signup/presentation/vie_model/signup_view_model.dart'
+    as _i560;
 import '../dio_module/dio_module.dart' as _i773;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -64,6 +75,8 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final dioModule = _$DioModule();
+    gh.factory<_i361.Dio>(() => dioModule.provideDio());
+    gh.factory<_i528.PrettyDioLogger>(() => dioModule.dioLogger());
     gh.singleton<_i361.Dio>(() => dioModule.dio);
     gh.factory<_i656.SubjectsApiClient>(
       () => _i656.SubjectsApiClient(gh<_i361.Dio>()),
@@ -72,6 +85,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i421.ForgetPasswordApiClient(gh<_i361.Dio>()),
     );
     gh.factory<_i62.LoginApiClient>(() => _i62.LoginApiClient(gh<_i361.Dio>()));
+    gh.factory<_i334.SignupApiClient>(
+      () => _i334.SignupApiClient(gh<_i361.Dio>()),
+    );
+    gh.factory<_i106.SignupRemoteDataSourceContract>(
+      () => _i825.SignupRemoteDataSourceImpl(gh<_i334.SignupApiClient>()),
+    );
     gh.factory<_i411.GetallSubjectsRemoteDataSourceContract>(
       () => _i471.GetallSubjectsRemoteDataSourceImpl(
         gh<_i656.SubjectsApiClient>(),
@@ -94,6 +113,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i576.ForgetPasswordRepoImpl(
         gh<_i997.ForgetPasswordRemoteDatasourceContract>(),
       ),
+    );
+    gh.factory<_i677.SignupRepoContract>(
+      () => _i868.SignupRepoImpl(gh<_i106.SignupRemoteDataSourceContract>()),
     );
     gh.factory<_i546.GetallSubjectsUsecase>(
       () => _i546.GetallSubjectsUsecase(gh<_i842.GetallSubjectsRepoContract>()),
@@ -124,8 +146,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i538.LoginUsecase>(
       () => _i538.LoginUsecase(gh<_i180.LoginRepoContract>()),
     );
+    gh.factory<_i25.SignupUsecase>(
+      () => _i25.SignupUsecase(gh<_i677.SignupRepoContract>()),
+    );
     gh.factory<_i355.LoginViewModel>(
       () => _i355.LoginViewModel(gh<_i538.LoginUsecase>()),
+    );
+    gh.factory<_i560.SignupViewModel>(
+      () => _i560.SignupViewModel(gh<_i25.SignupUsecase>()),
     );
     return this;
   }

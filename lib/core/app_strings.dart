@@ -25,4 +25,18 @@ class AppStrings {
   static const String survey = "Survey";
   static const String search = "Search";
 
+  static String signup = "Signup";
+  static String enterYourUserName = "Enter your user name";
+  static String username = "User name";
+  static String firstName = "First name";
+  static String enterYourFirstName = "Enter your first name";
+  static String lastName = "Last name";
+  static String enterYourLastName = "Enter your last name";
+  static String phoneNumber = "Phone number";
+  static String enterYourPhoneNumber = "Enter your phone number";
+  static String confirmPassword = "Confirm password";
+  static String passwordNotMatched = "Password not matched";
+  static String notValidUserName = "This user name is not valid";
+  static String signupAppBarTitle = "Sign Up";
+  static String alreadyHaveAnAccount = "Already have an account?";
 }
