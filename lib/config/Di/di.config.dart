@@ -13,6 +13,20 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../features/explore_tab/subjects_screen/api/api_client/api_client.dart'
+    as _i656;
+import '../../features/explore_tab/subjects_screen/api/data_sources_impls/getall_subjects_remote_data_source_impl.dart'
+    as _i471;
+import '../../features/explore_tab/subjects_screen/data/data_sources/getall_subjects_remote_data_source_contract.dart'
+    as _i411;
+import '../../features/explore_tab/subjects_screen/data/repo/getall_subjects_repo_impl.dart'
+    as _i149;
+import '../../features/explore_tab/subjects_screen/domain/repo/getall_subjects_repo_contract.dart'
+    as _i842;
+import '../../features/explore_tab/subjects_screen/domain/use_cases/getall_subjects_usecase.dart'
+    as _i546;
+import '../../features/explore_tab/subjects_screen/presentaion/view_model/subjects_screen_viewmodel.dart'
+    as _i939;
 import '../../features/forget_password/api/api_client/api_client.dart' as _i421;
 import '../../features/forget_password/api/data_sources_impls/forget_password_remote_datasource_impl.dart'
     as _i306;
@@ -51,12 +65,25 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final dioModule = _$DioModule();
     gh.singleton<_i361.Dio>(() => dioModule.dio);
+    gh.factory<_i656.SubjectsApiClient>(
+      () => _i656.SubjectsApiClient(gh<_i361.Dio>()),
+    );
     gh.factory<_i421.ForgetPasswordApiClient>(
       () => _i421.ForgetPasswordApiClient(gh<_i361.Dio>()),
     );
     gh.factory<_i62.LoginApiClient>(() => _i62.LoginApiClient(gh<_i361.Dio>()));
+    gh.factory<_i411.GetallSubjectsRemoteDataSourceContract>(
+      () => _i471.GetallSubjectsRemoteDataSourceImpl(
+        gh<_i656.SubjectsApiClient>(),
+      ),
+    );
     gh.factory<_i159.LoginRemoteDataSourceContract>(
       () => _i367.LoginRemoteDateSourceImpl(gh<_i62.LoginApiClient>()),
+    );
+    gh.factory<_i842.GetallSubjectsRepoContract>(
+      () => _i149.GetallSubjectsRepoImpl(
+        gh<_i411.GetallSubjectsRemoteDataSourceContract>(),
+      ),
     );
     gh.factory<_i997.ForgetPasswordRemoteDatasourceContract>(
       () => _i306.ForgetPasswordRemoteDatasourceImpl(
@@ -67,6 +94,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i576.ForgetPasswordRepoImpl(
         gh<_i997.ForgetPasswordRemoteDatasourceContract>(),
       ),
+    );
+    gh.factory<_i546.GetallSubjectsUsecase>(
+      () => _i546.GetallSubjectsUsecase(gh<_i842.GetallSubjectsRepoContract>()),
+    );
+    gh.factory<_i939.SubjectsScreenViewmodel>(
+      () => _i939.SubjectsScreenViewmodel(gh<_i546.GetallSubjectsUsecase>()),
     );
     gh.lazySingleton<_i998.VirefyResetCodeUsecase>(
       () =>
