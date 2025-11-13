@@ -16,11 +16,14 @@ class AppStrings {
   static const String NewPassword = "New Password";
   static const String ConfirmPassword = "Confirm Password";
   static const String passwordDoesntMatch = "Password Doesn't Match";
-  static const String passwordSuccessfulyChanged = "Password Successfuly Changed";
+  static const String passwordSuccessfulyChanged =
+      "Password Successfuly Changed";
   static const String dontHaveAnAccount = "Don't have an account ?";
   static const String signUp = "Sign Up";
   static const String explore = "Explore";
   static const String result = "Result";
   static const String profile = "Profile";
-
+  static const String veiwScore = "View score";
+  static const String timeOut = "Time out !!";
+  static const String question = "Question";
 }

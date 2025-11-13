@@ -13,6 +13,13 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../features/exam/api/api_client/api_client.dart' as _i621;
+import '../../features/exam/api/data_sources/remote/exam_remote_data_source_impl.dart'
+    as _i157;
+import '../../features/exam/data/data_sources/remote/exam_reomote_data_source_contract.dart'
+    as _i273;
+import '../../features/exam/data/repo/exam_repo_impl.dart' as _i790;
+import '../../features/exam/domain/repo/exam_repo_contract.dart' as _i651;
 import '../../features/forget_password/api/api_client/api_client.dart' as _i421;
 import '../../features/forget_password/api/data_sources_impls/forget_password_remote_datasource_impl.dart'
     as _i306;
@@ -51,12 +58,16 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final dioModule = _$DioModule();
     gh.singleton<_i361.Dio>(() => dioModule.dio);
+    gh.factory<_i621.ExamApiClient>(() => _i621.ExamApiClient(gh<_i361.Dio>()));
     gh.factory<_i421.ForgetPasswordApiClient>(
       () => _i421.ForgetPasswordApiClient(gh<_i361.Dio>()),
     );
     gh.factory<_i62.LoginApiClient>(() => _i62.LoginApiClient(gh<_i361.Dio>()));
     gh.factory<_i159.LoginRemoteDataSourceContract>(
       () => _i367.LoginRemoteDateSourceImpl(gh<_i62.LoginApiClient>()),
+    );
+    gh.factory<_i273.ExamReomoteDataSourceContract>(
+      () => _i157.ExamRemoteDataSourceImpl(gh<_i621.ExamApiClient>()),
     );
     gh.factory<_i997.ForgetPasswordRemoteDatasourceContract>(
       () => _i306.ForgetPasswordRemoteDatasourceImpl(
@@ -66,6 +77,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i665.ForgetPasswordRepoContract>(
       () => _i576.ForgetPasswordRepoImpl(
         gh<_i997.ForgetPasswordRemoteDatasourceContract>(),
+      ),
+    );
+    gh.factory<_i651.ExamRepoContract>(
+      () => _i790.ExamRepoImpl(
+        examRemoteDataSource: gh<_i273.ExamReomoteDataSourceContract>(),
       ),
     );
     gh.lazySingleton<_i998.VirefyResetCodeUsecase>(
