@@ -26,4 +26,9 @@ class AppStrings {
   static const String veiwScore = "View score";
   static const String timeOut = "Time out !!";
   static const String question = "Question";
+  static const String retry = "Retry";
+  static const String error = "Somthing Went Wrong";
+  static const String back = "Back";
+  static const String finish = "Finish";
+  static const String next = "Next";
 }
