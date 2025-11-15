@@ -1,11 +1,11 @@
 import 'package:exam_app_project/core/app_styles.dart';
+import 'package:exam_app_project/features/explore_tab/subjects_screen/domain/models/subjects_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SubjectCard extends StatelessWidget{
-  String? SubName;
-  String? SubPhoto;
-  SubjectCard({required this.SubName,required this.SubPhoto});
+  SubjectsModel subjectsModel;
+  SubjectCard({required this.subjectsModel});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,13 +36,13 @@ class SubjectCard extends StatelessWidget{
               Container(
                 width: 60.h,
                 height: 80.h,
-                child: Image.network("https://exam.elevateegy.com/uploads/categories/67ee864e5554b32891275c49-flutter.png",
+                child: Image.network(this.subjectsModel.icon!,
                 width: double.infinity,
                 height: 60.h,
                 )
               ),
               SizedBox(width: 25.w,),
-              Text("ass",style: AppStyles.ragular16Black,)
+              Text(this.subjectsModel.name!,style: AppStyles.ragular16Black,)
             ],
           ),
         ),

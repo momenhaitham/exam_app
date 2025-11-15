@@ -12,7 +12,6 @@
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
-import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 
 import '../../features/explore_tab/subjects_screen/api/api_client/api_client.dart'
     as _i656;
@@ -75,8 +74,6 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final dioModule = _$DioModule();
-    gh.factory<_i361.Dio>(() => dioModule.provideDio());
-    gh.factory<_i528.PrettyDioLogger>(() => dioModule.dioLogger());
     gh.singleton<_i361.Dio>(() => dioModule.dio);
     gh.factory<_i656.SubjectsApiClient>(
       () => _i656.SubjectsApiClient(gh<_i361.Dio>()),
@@ -88,13 +85,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i334.SignupApiClient>(
       () => _i334.SignupApiClient(gh<_i361.Dio>()),
     );
-    gh.factory<_i106.SignupRemoteDataSourceContract>(
-      () => _i825.SignupRemoteDataSourceImpl(gh<_i334.SignupApiClient>()),
-    );
     gh.factory<_i411.GetallSubjectsRemoteDataSourceContract>(
       () => _i471.GetallSubjectsRemoteDataSourceImpl(
         gh<_i656.SubjectsApiClient>(),
       ),
+    );
+    gh.factory<_i106.SignupRemoteDataSourceContract>(
+      () => _i825.SignupRemoteDataSourceImpl(gh<_i334.SignupApiClient>()),
     );
     gh.factory<_i159.LoginRemoteDataSourceContract>(
       () => _i367.LoginRemoteDateSourceImpl(gh<_i62.LoginApiClient>()),
@@ -114,11 +111,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i997.ForgetPasswordRemoteDatasourceContract>(),
       ),
     );
-    gh.factory<_i677.SignupRepoContract>(
-      () => _i868.SignupRepoImpl(gh<_i106.SignupRemoteDataSourceContract>()),
-    );
     gh.factory<_i546.GetallSubjectsUsecase>(
       () => _i546.GetallSubjectsUsecase(gh<_i842.GetallSubjectsRepoContract>()),
+    );
+    gh.factory<_i677.SignupRepoContract>(
+      () => _i868.SignupRepoImpl(gh<_i106.SignupRemoteDataSourceContract>()),
     );
     gh.factory<_i939.SubjectsScreenViewmodel>(
       () => _i939.SubjectsScreenViewmodel(gh<_i546.GetallSubjectsUsecase>()),

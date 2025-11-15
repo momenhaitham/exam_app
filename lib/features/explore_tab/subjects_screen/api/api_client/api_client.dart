@@ -15,5 +15,5 @@ abstract class SubjectsApiClient {
   factory SubjectsApiClient(Dio dio) = _SubjectsApiClient;
 
   @GET(AppEndpoints.GetAllSubjects)
-  Future<SubjectsResponse> GetAllSubjects(@Header("Authorization") String token);
+  Future<SubjectsResponse> GetAllSubjects(@Header("token") String token);
 }

@@ -24,7 +24,6 @@ class AppStrings {
   static const String profile = "Profile";
   static const String survey = "Survey";
   static const String search = "Search";
-
   static String signup = "Signup";
   static String enterYourUserName = "Enter your user name";
   static String username = "User name";
@@ -39,4 +38,5 @@ class AppStrings {
   static String notValidUserName = "This user name is not valid";
   static String signupAppBarTitle = "Sign Up";
   static String alreadyHaveAnAccount = "Already have an account?";
+  
 }

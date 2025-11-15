@@ -10,12 +10,11 @@ class GetallSubjectsRemoteDataSourceImpl extends GetallSubjectsRemoteDataSourceC
   GetallSubjectsRemoteDataSourceImpl(this.apiClient);
   @override
   Future<BaseResponse<SubjectsResponse>> GetAllSubjects(String? tokin)async {
-
     try{
-      SubjectsResponse response =await apiClient.GetAllSubjects("Bearer ${tokin}");
+      SubjectsResponse response =await apiClient.GetAllSubjects(tokin!);
       return SuccessResponse<SubjectsResponse>(data: response);
     }catch(e){
-      return ErrorResponse(error: e as Exception);
+      return ErrorResponse<SubjectsResponse>(error: e as Exception);
     }
   }
 }

@@ -23,14 +23,14 @@ class _SubjectsApiClient implements SubjectsApiClient {
   Future<SubjectsResponse> GetAllSubjects(String token) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
+    final _headers = <String, dynamic>{r'token': token};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<SubjectsResponse>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'subjects',
+            '/subjects',
             queryParameters: queryParameters,
             data: _data,
           )
