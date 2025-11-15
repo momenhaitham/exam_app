@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:exam_app_project/config/base_response/base_response.dart';
 import 'package:exam_app_project/config/base_state/base_state.dart';
 import 'package:exam_app_project/features/exam/domain/models/question_model.dart';
@@ -17,8 +19,19 @@ class ExamViewModel extends Cubit<ExamStates> {
     switch (event) {
       case GetQuestionsEvent():
         getExamQuestions(id: event.id, token: event.token);
+      case SelectAnswerEvent():
+        selectAnswer(event.questionId, event.answerKey);
       case GetQuestionsScoreEvent():
     }
+  }
+
+  void selectAnswer(String questionId, String answerKey) {
+    final updatedAnswers = Map<String, String>.from(
+      state.selectedAnswers ?? {},
+    );
+    updatedAnswers[questionId] = answerKey;
+    emit(state.copyWith(newSelectedAnswers: updatedAnswers));
+    log(updatedAnswers.toString());
   }
 
   void getExamQuestions({required String id, required String token}) async {
@@ -41,7 +54,7 @@ class ExamViewModel extends Cubit<ExamStates> {
             ),
           ),
         );
-        print('doooooooone');
+        log('doooooooone');
       case ErrorResponse<List<QuestionModel>>():
         emit(
           state.copyWith(
@@ -51,7 +64,7 @@ class ExamViewModel extends Cubit<ExamStates> {
             ),
           ),
         );
-        print('xxxxxxxxxxxxxxxxxxxx');
+        log('xxxxxxxxxxxxxxxxxxxx');
     }
   }
 }

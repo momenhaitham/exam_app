@@ -121,6 +121,7 @@ class _ExamScreenState extends State<ExamScreen> {
               final questions = state.questions!.data!;
               final totalQuestions = questions.length;
               final currentQuestion = questions[currentQuestionIndex];
+              final selectedAnswers = state.selectedAnswers ?? {};
 
               return SafeArea(
                 child: Padding(
@@ -128,7 +129,6 @@ class _ExamScreenState extends State<ExamScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Progress Section
                       Column(
                         children: [
                           Text(
@@ -173,14 +173,24 @@ class _ExamScreenState extends State<ExamScreen> {
                         child: ListView.builder(
                           itemCount: currentQuestion.answers.length,
                           itemBuilder: (context, index) {
+                            final answerKey = 'A${index + 1}';
+                            final isSelected =
+                                selectedAnswers[currentQuestion.id] ==
+                                answerKey;
                             return QuestionOptionWidget(
                               text: currentQuestion.answers[index],
                               index: index,
-                              isSelected: selectedOption == index,
+                              isSelected: isSelected,
                               onTap: (index) {
                                 setState(() {
                                   selectedOption = index;
                                 });
+                                context.read<ExamViewModel>().doIntent(
+                                  SelectAnswerEvent(
+                                    questionId: currentQuestion.id,
+                                    answerKey: answerKey,
+                                  ),
+                                );
                               },
                             );
                           },

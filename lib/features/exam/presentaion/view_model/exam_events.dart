@@ -7,4 +7,11 @@ class GetQuestionsEvent extends ExamEvents {
   GetQuestionsEvent({required this.token, required this.id});
 }
 
+class SelectAnswerEvent extends ExamEvents {
+  final String questionId;
+  final String answerKey;
+
+  SelectAnswerEvent({required this.questionId, required this.answerKey});
+}
+
 class GetQuestionsScoreEvent extends ExamEvents {}
