@@ -25,7 +25,9 @@ class QuestionOptionWidget extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.selectedOption : AppColors.lightBlue,
+          color: isSelected
+              ? AppColors.selectedOption
+              : AppColors.unSelectedOption,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
