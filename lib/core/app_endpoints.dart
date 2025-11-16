@@ -5,4 +5,5 @@ class AppEndpoints {
   static const VerifyResetCode = "auth/verifyResetCode";
   static const ResetPassword = "/auth/resetPassword";
   static const String getQuestionsEndpoint = 'questions';
+  static const String checkAnswersEndpoint = 'questions/check';
 }

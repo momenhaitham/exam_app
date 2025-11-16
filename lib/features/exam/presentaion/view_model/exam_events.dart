@@ -1,3 +1,5 @@
+import 'package:exam_app_project/features/exam/domain/models/answer_item_model.dart';
+
 abstract class ExamEvents {}
 
 class GetQuestionsEvent extends ExamEvents {
@@ -8,10 +10,13 @@ class GetQuestionsEvent extends ExamEvents {
 }
 
 class SelectAnswerEvent extends ExamEvents {
-  final String questionId;
-  final String answerKey;
+  AnswerItemModel answer;
 
-  SelectAnswerEvent({required this.questionId, required this.answerKey});
+  SelectAnswerEvent({required this.answer});
 }
 
-class GetQuestionsScoreEvent extends ExamEvents {}
+class SubmitAnswersEvent extends ExamEvents {
+  final String token;
+  final List<AnswerItemModel> answers;
+  SubmitAnswersEvent(this.answers, {required this.token});
+}

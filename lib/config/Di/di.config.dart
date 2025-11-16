@@ -20,6 +20,8 @@ import '../../features/exam/data/data_sources/remote/exam_reomote_data_source_co
     as _i273;
 import '../../features/exam/data/repo/exam_repo_impl.dart' as _i790;
 import '../../features/exam/domain/repo/exam_repo_contract.dart' as _i651;
+import '../../features/exam/domain/use_cases/check_answers_usecase.dart'
+    as _i997;
 import '../../features/exam/domain/use_cases/get_questions_usecase.dart'
     as _i386;
 import '../../features/exam/presentaion/view_model/exam_view_model.dart'
@@ -105,17 +107,23 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i998.VirefyResetCodeUsecase>(),
       ),
     );
+    gh.factory<_i997.CheckAnswersUsecase>(
+      () => _i997.CheckAnswersUsecase(examRepo: gh<_i651.ExamRepoContract>()),
+    );
     gh.factory<_i386.GetQuestionsUsecase>(
       () => _i386.GetQuestionsUsecase(examRepo: gh<_i651.ExamRepoContract>()),
     );
     gh.factory<_i180.LoginRepoContract>(
       () => _i176.LoginRepoImpl(gh<_i159.LoginRemoteDataSourceContract>()),
     );
+    gh.factory<_i243.ExamViewModel>(
+      () => _i243.ExamViewModel(
+        gh<_i386.GetQuestionsUsecase>(),
+        gh<_i997.CheckAnswersUsecase>(),
+      ),
+    );
     gh.factory<_i538.LoginUsecase>(
       () => _i538.LoginUsecase(gh<_i180.LoginRepoContract>()),
-    );
-    gh.factory<_i243.ExamViewModel>(
-      () => _i243.ExamViewModel(gh<_i386.GetQuestionsUsecase>()),
     );
     gh.factory<_i355.LoginViewModel>(
       () => _i355.LoginViewModel(gh<_i538.LoginUsecase>()),

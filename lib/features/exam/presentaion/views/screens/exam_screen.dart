@@ -2,12 +2,15 @@ import 'package:exam_app_project/config/Di/di.dart';
 import 'package:exam_app_project/core/app_colors.dart';
 import 'package:exam_app_project/core/app_strings.dart';
 import 'package:exam_app_project/core/app_styles.dart';
+import 'package:exam_app_project/features/exam/domain/models/answer_item_model.dart';
 import 'package:exam_app_project/features/exam/presentaion/view_model/exam_events.dart';
 import 'package:exam_app_project/features/exam/presentaion/view_model/exam_states.dart';
 import 'package:exam_app_project/features/exam/presentaion/view_model/exam_view_model.dart';
+import 'package:exam_app_project/features/exam/presentaion/views/screens/exam_score_screen.dart';
 import 'package:exam_app_project/features/exam/presentaion/views/widgets/question_option_widget.dart';
 import 'package:exam_app_project/features/exam/presentaion/views/widgets/timer_widget.dart';
 import 'package:exam_app_project/reuseable_widgets/custm_elevated_button.dart';
+import 'package:exam_app_project/reuseable_widgets/error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,16 +38,10 @@ class _ExamScreenState extends State<ExamScreen> {
           ),
         ),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
+          backgroundColor: AppColors.white,
+
           title: BlocBuilder<ExamViewModel, ExamStates>(
             builder: (context, state) {
               if (state.questions?.data != null &&
@@ -75,7 +72,21 @@ class _ExamScreenState extends State<ExamScreen> {
                       state.questions!.data!.first.examInfo.duration;
                   return Padding(
                     padding: const EdgeInsets.only(right: 16),
-                    child: TimerWidget(timeInMinutes: duration.toString()),
+                    child: TimerWidget(
+                      timeInMinutes: duration.toString(),
+                      onTimeEnded: () {
+                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ExamScoreScreen(
+                              numberOfquestions: state.questions!.data!.length,
+                              result: state.selectedAnswers ?? [],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   );
                 }
                 return const SizedBox();
@@ -88,31 +99,7 @@ class _ExamScreenState extends State<ExamScreen> {
             // Error State
             if (state.questions?.errorMessage != null &&
                 state.questions!.errorMessage!.isNotEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      state.questions!.errorMessage!,
-                      style: const TextStyle(color: Colors.red),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {
-                        context.read<ExamViewModel>().doIntent(
-                          GetQuestionsEvent(
-                            id: '670070a830a3c3c1944a9c63',
-                            token:
-                                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MTNkMzQyOGZiMTlhZDk1NWIyNmRlNyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzYyOTEyMjA4fQ._4nXG40sWDJtzK2r8pFh73gcAGsX267HdC1bRzTlh_c",
-                          ),
-                        );
-                      },
-                      child: const Text('Retry'),
-                    ),
-                  ],
-                ),
-              );
+              return CustomErrorWidget();
             }
             // Success State with Data
             else if (!(state.questions?.isLoading ?? false) &&
@@ -121,8 +108,7 @@ class _ExamScreenState extends State<ExamScreen> {
               final questions = state.questions!.data!;
               final totalQuestions = questions.length;
               final currentQuestion = questions[currentQuestionIndex];
-              final selectedAnswers = state.selectedAnswers ?? {};
-
+              final selectedAnswers = state.selectedAnswers ?? [];
               return SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -155,8 +141,6 @@ class _ExamScreenState extends State<ExamScreen> {
                         ],
                       ),
                       const SizedBox(height: 24),
-
-                      // Question Text
                       Text(
                         currentQuestion.questionText,
                         style: const TextStyle(
@@ -166,17 +150,21 @@ class _ExamScreenState extends State<ExamScreen> {
                         ),
                       ),
                       const SizedBox(height: 24),
-
-                      // Options List
                       SizedBox(
                         height: currentQuestion.answers.length * 100,
                         child: ListView.builder(
                           itemCount: currentQuestion.answers.length,
                           itemBuilder: (context, index) {
                             final answerKey = 'A${index + 1}';
+                            final selectedAnswer = selectedAnswers.firstWhere(
+                              (ans) => ans.questionId == currentQuestion.id,
+                              orElse: () => AnswerItemModel(
+                                questionId: currentQuestion.id,
+                                correct: '',
+                              ),
+                            );
                             final isSelected =
-                                selectedAnswers[currentQuestion.id] ==
-                                answerKey;
+                                selectedAnswer.correct == answerKey;
                             return QuestionOptionWidget(
                               text: currentQuestion.answers[index],
                               index: index,
@@ -187,8 +175,10 @@ class _ExamScreenState extends State<ExamScreen> {
                                 });
                                 context.read<ExamViewModel>().doIntent(
                                   SelectAnswerEvent(
-                                    questionId: currentQuestion.id,
-                                    answerKey: answerKey,
+                                    answer: AnswerItemModel(
+                                      questionId: currentQuestion.id,
+                                      correct: answerKey,
+                                    ),
                                   ),
                                 );
                               },
@@ -196,10 +186,7 @@ class _ExamScreenState extends State<ExamScreen> {
                           },
                         ),
                       ),
-
                       const SizedBox(height: 16),
-
-                      // Navigation Buttons
                       Row(
                         children: [
                           Expanded(
@@ -236,10 +223,14 @@ class _ExamScreenState extends State<ExamScreen> {
                                     selectedOption = null;
                                   });
                                 } else {
-                                  // Submit exam
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Exam completed!'),
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ExamScoreScreen(
+                                        numberOfquestions:
+                                            state.questions!.data!.length,
+                                        result: selectedAnswers,
+                                      ),
                                     ),
                                   );
                                 }
@@ -264,9 +255,7 @@ class _ExamScreenState extends State<ExamScreen> {
                   ),
                 ),
               );
-            }
-            // Empty State
-            else if (!(state.questions?.isLoading ?? false) &&
+            } else if (!(state.questions?.isLoading ?? false) &&
                 state.questions?.data != null &&
                 state.questions!.data!.isEmpty) {
               return const Center(child: Text("No Questions Available"));

@@ -1,6 +1,13 @@
+import 'dart:developer';
+
 import 'package:exam_app_project/config/base_response/base_response.dart';
 import 'package:exam_app_project/features/exam/data/data_sources/remote/exam_reomote_data_source_contract.dart';
-import 'package:exam_app_project/features/exam/data/models/question_dto.dart';
+import 'package:exam_app_project/features/exam/data/models/check_answers_models/answer_item_dto.dart';
+import 'package:exam_app_project/features/exam/data/models/check_answers_models/check_answers_request_dto.dart';
+import 'package:exam_app_project/features/exam/data/models/check_answers_models/check_answers_response_dto.dart';
+import 'package:exam_app_project/features/exam/data/models/get_questions_models/question_dto.dart';
+import 'package:exam_app_project/features/exam/domain/models/answer_item_model.dart';
+import 'package:exam_app_project/features/exam/domain/models/check_answers_result_model.dart';
 import 'package:exam_app_project/features/exam/domain/models/question_model.dart';
 import 'package:exam_app_project/features/exam/domain/repo/exam_repo_contract.dart';
 import 'package:injectable/injectable.dart';
@@ -27,6 +34,37 @@ class ExamRepoImpl implements ExamRepoContract {
       case ErrorResponse<List<QuestionDto>>():
         return ErrorResponse<List<QuestionModel>>(
           error: questionsResponse.error,
+        );
+    }
+  }
+
+  @override
+  Future<BaseResponse<CheckAnswersResultModel>> checkAnswers({
+    required List<AnswerItemModel> answers,
+    required String token,
+  }) async {
+    log('ExamRepoImpl - Received ${answers.length} answers');
+
+    final requestDto = CheckAnswersRequestDto(
+      answers: answers
+          .map((answer) => AnswerItemDto.fromDomain(answer))
+          .toList(),
+    );
+
+    BaseResponse<CheckAnswersResponseDto> checkAnswersResponse =
+        await examRemoteDataSource.checkAnswers(
+          request: requestDto,
+          token: token,
+        );
+
+    switch (checkAnswersResponse) {
+      case SuccessResponse<CheckAnswersResponseDto>():
+        CheckAnswersResponseDto responseDto = checkAnswersResponse.data;
+        CheckAnswersResultModel resultModel = responseDto.toDomain();
+        return SuccessResponse<CheckAnswersResultModel>(data: resultModel);
+      case ErrorResponse<CheckAnswersResponseDto>():
+        return ErrorResponse<CheckAnswersResultModel>(
+          error: checkAnswersResponse.error,
         );
     }
   }

@@ -31,4 +31,10 @@ class AppStrings {
   static const String back = "Back";
   static const String finish = "Finish";
   static const String next = "Next";
+  static const String examScore = "Exam Score";
+  static const String yourScore = 'Your Score';
+  static const String correct = 'Correct';
+  static const String incorrect = 'Incorrect';
+  static const String showResults = 'Show results';
+  static const String startAgain = 'Start again';
 }

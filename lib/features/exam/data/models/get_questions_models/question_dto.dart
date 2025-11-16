@@ -1,5 +1,6 @@
 // features/exam/data/models/question_dto.dart
-import 'package:exam_app_project/features/exam/data/models/exam_dto.dart';
+import 'package:exam_app_project/features/exam/data/models/get_questions_models/answer_dto.dart';
+import 'package:exam_app_project/features/exam/data/models/get_questions_models/exam_dto.dart';
 import 'package:exam_app_project/features/exam/domain/models/exam_info_model.dart';
 import 'package:exam_app_project/features/exam/domain/models/question_model.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -62,20 +63,4 @@ class QuestionDto {
       ),
     );
   }
-}
-
-@JsonSerializable()
-class AnswerDto {
-  @JsonKey(name: 'answer')
-  final String? answer;
-
-  @JsonKey(name: 'key')
-  final String? key;
-
-  AnswerDto({this.answer, this.key});
-
-  factory AnswerDto.fromJson(Map<String, dynamic> json) =>
-      _$AnswerDtoFromJson(json);
-
-  Map<String, dynamic> toJson() => _$AnswerDtoToJson(this);
 }
