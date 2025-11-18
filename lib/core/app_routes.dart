@@ -4,5 +4,6 @@ class AppRoutes {
   static const String EmailVerificationScreenRoute = "EmailVerificationScreenRoute";
   static const String ResetPasswordScreenRoute = "ResetPasswordScreenRoute";
   static const String HomeScreenRoute = "HomeScreenRoute";
-
+  static const String examsScreenRoute = "examsScreenRoute";
+  static const String startExamScreenRoute = "startExamScreenRoute";
 }

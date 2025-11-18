@@ -22,5 +22,8 @@ class AppStrings {
   static const String explore = "Explore";
   static const String result = "Result";
   static const String profile = "Profile";
-
+  static const String languages = "Languages";
+  static const String instructions = "Instructions";
+  static const String instructionContent = "Lorem ipsum dolor sit amet consectetur.";
+  static const String startExam = "Start Exam";
 }

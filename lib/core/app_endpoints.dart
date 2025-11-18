@@ -4,4 +4,6 @@ class AppEndpoints {
   static const ForgotPasswordEndpoint = "auth/forgotPassword";
   static const VerifyResetCode = "auth/verifyResetCode";
   static const ResetPassword = "/auth/resetPassword";
+  static const String subjectExams = "/exams";
+  static const String exam = "/exams{examId}";
 }

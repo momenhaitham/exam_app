@@ -5,5 +5,6 @@ class AppAssets {
   static const String resultUnselected = "assets/images/resultUnselected.png";
   static const String profileSelected = "assets/images/profileSelected.png";
   static const String profileUnselected = "assets/images/profileUnselected.png";
+  static const String examImage = "assets/images/exam_image.png";
 
 }
