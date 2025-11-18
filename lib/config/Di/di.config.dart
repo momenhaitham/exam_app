@@ -13,6 +13,19 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../features/exam/api/api_client/api_client.dart' as _i621;
+import '../../features/exam/api/data_sources/remote/exam_remote_data_source_impl.dart'
+    as _i157;
+import '../../features/exam/data/data_sources/remote/exam_reomote_data_source_contract.dart'
+    as _i273;
+import '../../features/exam/data/repo/exam_repo_impl.dart' as _i790;
+import '../../features/exam/domain/repo/exam_repo_contract.dart' as _i651;
+import '../../features/exam/domain/use_cases/check_answers_usecase.dart'
+    as _i997;
+import '../../features/exam/domain/use_cases/get_questions_usecase.dart'
+    as _i386;
+import '../../features/exam/presentaion/view_model/exam_view_model.dart'
+    as _i243;
 import '../../features/explore_tab/subjects_screen/api/api_client/api_client.dart'
     as _i656;
 import '../../features/explore_tab/subjects_screen/api/data_sources_impls/getall_subjects_remote_data_source_impl.dart'
@@ -78,6 +91,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i656.SubjectsApiClient>(
       () => _i656.SubjectsApiClient(gh<_i361.Dio>()),
     );
+    gh.factory<_i621.ExamApiClient>(() => _i621.ExamApiClient(gh<_i361.Dio>()));
     gh.factory<_i421.ForgetPasswordApiClient>(
       () => _i421.ForgetPasswordApiClient(gh<_i361.Dio>()),
     );
@@ -101,6 +115,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i411.GetallSubjectsRemoteDataSourceContract>(),
       ),
     );
+    gh.factory<_i273.ExamReomoteDataSourceContract>(
+      () => _i157.ExamRemoteDataSourceImpl(gh<_i621.ExamApiClient>()),
+    );
     gh.factory<_i997.ForgetPasswordRemoteDatasourceContract>(
       () => _i306.ForgetPasswordRemoteDatasourceImpl(
         gh<_i421.ForgetPasswordApiClient>(),
@@ -120,6 +137,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i939.SubjectsScreenViewmodel>(
       () => _i939.SubjectsScreenViewmodel(gh<_i546.GetallSubjectsUsecase>()),
     );
+    gh.factory<_i651.ExamRepoContract>(
+      () => _i790.ExamRepoImpl(
+        examRemoteDataSource: gh<_i273.ExamReomoteDataSourceContract>(),
+      ),
+    );
     gh.lazySingleton<_i998.VirefyResetCodeUsecase>(
       () =>
           _i998.VirefyResetCodeUsecase(gh<_i665.ForgetPasswordRepoContract>()),
@@ -137,8 +159,20 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i998.VirefyResetCodeUsecase>(),
       ),
     );
+    gh.factory<_i997.CheckAnswersUsecase>(
+      () => _i997.CheckAnswersUsecase(examRepo: gh<_i651.ExamRepoContract>()),
+    );
+    gh.factory<_i386.GetQuestionsUsecase>(
+      () => _i386.GetQuestionsUsecase(examRepo: gh<_i651.ExamRepoContract>()),
+    );
     gh.factory<_i180.LoginRepoContract>(
       () => _i176.LoginRepoImpl(gh<_i159.LoginRemoteDataSourceContract>()),
+    );
+    gh.factory<_i243.ExamViewModel>(
+      () => _i243.ExamViewModel(
+        gh<_i386.GetQuestionsUsecase>(),
+        gh<_i997.CheckAnswersUsecase>(),
+      ),
     );
     gh.factory<_i538.LoginUsecase>(
       () => _i538.LoginUsecase(gh<_i180.LoginRepoContract>()),

@@ -6,4 +6,6 @@ class AppEndpoints {
   static const ResetPassword = "/auth/resetPassword";
   static const GetAllSubjects = "/subjects";
   static const registerEndpoint = "auth/signup";
+  static const String getQuestionsEndpoint = 'questions';
+  static const String checkAnswersEndpoint = 'questions/check';
 }
