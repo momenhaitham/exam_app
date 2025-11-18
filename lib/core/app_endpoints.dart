@@ -8,4 +8,6 @@ class AppEndpoints {
   static const registerEndpoint = "auth/signup";
   static const String getQuestionsEndpoint = 'questions';
   static const String checkAnswersEndpoint = 'questions/check';
+  static const String subjectExams = "/exams";
+  static const String exam = "/exams{examId}";
 }

@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:exam_app_project/core/app_endpoints.dart';
 import 'package:injectable/injectable.dart';
-import 'package:dio/dio.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+
 
 @module
 abstract class DioModule {

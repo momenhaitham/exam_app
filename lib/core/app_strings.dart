@@ -52,5 +52,9 @@ class AppStrings {
   static String notValidUserName = "This user name is not valid";
   static String signupAppBarTitle = "Sign Up";
   static String alreadyHaveAnAccount = "Already have an account?";
-  
+  static const String languages = "Languages";
+  static const String instructions = "Instructions";
+  static const String instructionContent = "Lorem ipsum dolor sit amet consectetur.";
+  static const String startExam = "Start Exam";
+
 }
