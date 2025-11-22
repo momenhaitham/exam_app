@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:exam_app_project/config/Di/di.dart';
+import 'package:exam_app_project/config/app_provider/app_provider.dart';
 import 'package:exam_app_project/core/app_colors.dart';
 import 'package:exam_app_project/core/app_routes.dart';
 import 'package:exam_app_project/core/app_strings.dart';
@@ -11,13 +14,14 @@ import 'package:exam_app_project/reuseable_widgets/show_dialog_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget{
   LoginViewModel loginViewModel = getIt<LoginViewModel>();
   @override
   Widget build(BuildContext context) {
     var validate=GlobalKey<FormState>();
-    
+    var provider = Provider.of<AppProvider>(context);
     return BlocProvider<LoginViewModel>(
       create: (context) => loginViewModel,
       child: Scaffold(
@@ -78,7 +82,7 @@ class LoginScreen extends StatelessWidget{
                           Spacer(),
                           InkWell(child: Text(AppStrings.ForgetPass,style: AppStyles.ragular16Black.copyWith(decoration:TextDecoration.underline ),),
                           onTap: () {
-                            Navigator.of(context).pushNamed(AppRoutes.LoginScreenRoute);
+                            Navigator.of(context).pushNamed(AppRoutes.ForgetPasswordScreenRoute);
                           },
                           )
                         ],
@@ -90,7 +94,7 @@ class LoginScreen extends StatelessWidget{
                         child: ElevatedButton(
                           onPressed: (){
                             if(validate.currentState?.validate()==true){
-                            loginViewModel.DoIntent(LoginEvent(),email:loginViewModel.enteredEmail!,password:loginViewModel.enteredPassword! );
+                            loginViewModel.DoIntent(LoginEvent(),email:loginViewModel.enteredEmail!,password:loginViewModel.enteredPassword!);
                             }
                           },
                           child: Text(AppStrings.login,style: AppStyles.Medium16White,),
@@ -107,19 +111,53 @@ class LoginScreen extends StatelessWidget{
                 ShowDialogUtils.HideLoading(context);
                 ShowDialogUtils.ShowMessage(context, Title: state.loginState?.errorMessage);
               }else if (state.loginState?.data!=null){
-                ShowDialogUtils.HideLoading(context);
-                ShowDialogUtils.ShowMessage(context, Title: state.loginState?.data?.massage);
+                Timer(Duration(seconds: 2),()async{
+                  provider.token=state.loginState!.data!.tokin;
+                  if(loginViewModel.rememberMeChickBox==1){
+                    await provider.writeTokin(state.loginState!.data!.tokin!);
+                  }
+                  ShowDialogUtils.HideLoading(context);
+                  Navigator.of(context).pushNamed(AppRoutes.HomeScreenRoute);
+                });
+                
               }
                 
                   },),
               SizedBox(height: 16.h,),
-              Center(child: RichText(text: TextSpan(
-                children: [
-                  TextSpan(text: AppStrings.dontHaveAnAccount,style: AppStyles.ragular16Black),
-                  TextSpan(text: AppStrings.signUp,style: AppStyles.ragular16Black.copyWith(color: AppColors.blue,decoration: TextDecoration.underline)),
-                ]
-              ),),)
-            ],
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: AppStrings.dontHaveAnAccount,
+                        style: AppStyles.ragular16Black,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 4), // small spacing between texts
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(AppRoutes.signupScreenRoute);
+                  },
+                  child: Text(
+                    AppStrings.signUp,
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: AppColors.blue,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+
+          ],
           ),
         ),
       )) ;

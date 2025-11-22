@@ -1,11 +1,14 @@
+import 'package:exam_app_project/config/app_provider/app_provider.dart';
 import 'package:exam_app_project/config/base_response/base_response.dart';
 import 'package:exam_app_project/config/base_state/base_state.dart';
 import 'package:exam_app_project/features/login/domain/models/login_model.dart';
 import 'package:exam_app_project/features/login/domain/use_cases/login_usecase.dart';
 import 'package:exam_app_project/features/login/presentaion/view_model/login_events.dart';
 import 'package:exam_app_project/features/login/presentaion/view_model/login_states.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:provider/provider.dart';
 
 @injectable
 class LoginViewModel extends Cubit<LoginStates>{
@@ -32,6 +35,7 @@ class LoginViewModel extends Cubit<LoginStates>{
     switch(loginResponse){
       case SuccessResponse<LoginModel>():
         emit(state.copyWith(loginStateParam: BaseState<LoginModel>(data: loginResponse.data,isLoading: false)));
+        
       case ErrorResponse<LoginModel>():
         String errorMassege = loginResponse.error.toString();
         emit(state.copyWith(loginStateParam: BaseState<LoginModel>(errorMessage: errorMassege ,isLoading: false)));
@@ -47,4 +51,9 @@ class LoginViewModel extends Cubit<LoginStates>{
     }
     emit(state.copyWith());
   }
+
+
+
+
+
 }

@@ -27,4 +27,15 @@ class AppValidators {
                 }else 
                 return null;
   }
+
+  static String? validatePasswordMatch(String password, String rePassword) {
+    if (password.trim().isEmpty || rePassword.trim().isEmpty) {
+      return AppStrings.youMustEnterYourPassword;
+    }
+    if (password.trim() != rePassword.trim()) {
+      return AppStrings.passwordNotMatched;
+    }
+    return null;
+  }
+
 }
