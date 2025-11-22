@@ -1,5 +1,4 @@
 import 'package:exam_app_project/config/Di/di.dart';
-import 'package:exam_app_project/core/app_endpoints.dart';
 import 'package:exam_app_project/core/app_errors.dart';
 import 'package:exam_app_project/core/app_strings.dart';
 import 'package:exam_app_project/core/app_styles.dart';

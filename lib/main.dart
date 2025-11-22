@@ -2,14 +2,15 @@ import 'package:exam_app_project/config/Di/di.dart';
 import 'package:exam_app_project/config/app_provider/app_provider.dart';
 import 'package:exam_app_project/core/app_routes.dart';
 import 'package:exam_app_project/core/app_theme.dart';
-import 'package:exam_app_project/features/exam/presentaion/views/screens/exam_screen.dart';
+import 'package:exam_app_project/features/explore_tab/exam/presentaion/views/screens/exam_screen.dart';
 import 'package:exam_app_project/features/forget_password/presentaion/views/email_verfication_screen.dart';
 import 'package:exam_app_project/features/forget_password/presentaion/views/forget_password_screen.dart';
 import 'package:exam_app_project/features/forget_password/presentaion/views/reset_password_screen.dart';
-import 'package:exam_app_project/features/start_exam/presention/views/start_exam_screen.dart';
+import 'package:exam_app_project/features/explore_tab/start_exam/presention/views/start_exam_screen.dart';
 import 'package:exam_app_project/features/home_screen/presentaion/views/home_screen.dart';
 import 'package:exam_app_project/features/login/presentaion/views/login_screen.dart';
 import 'package:exam_app_project/features/signup/presentation/views/signup_screen.dart';
+import 'package:exam_app_project/features/explore_tab/subject_exams/presentation/views/exams_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -42,19 +43,17 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.Theme,
-        initialRoute:provider.token!=null?AppRoutes.HomeScreenRoute:AppRoutes.LoginScreenRoute,
+        initialRoute:AppRoutes.LoginScreenRoute,
         routes: {
-          AppRoutes.LoginScreenRoute : (context)=>LoginScreen(),
-          AppRoutes.signupScreenRoute : (context)=>SignupScreen(),
-          AppRoutes.ForgetPasswordScreenRoute: (context) =>
-              ForgetPasswordScreen(),
-          AppRoutes.EmailVerificationScreenRoute: (context) =>
-              EmailVerficationScreen(),
-          AppRoutes.ResetPasswordScreenRoute: (context) =>
-              ResetPasswordScreen(),
+          AppRoutes.LoginScreenRoute : (context)=> LoginScreen(),
+          AppRoutes.signupScreenRoute : (context)=> SignupScreen(),
+          AppRoutes.ForgetPasswordScreenRoute: (context) => ForgetPasswordScreen(),
+          AppRoutes.EmailVerificationScreenRoute: (context) => EmailVerficationScreen(),
+          AppRoutes.ResetPasswordScreenRoute: (context) => ResetPasswordScreen(),
           AppRoutes.HomeScreenRoute: (context) => HomeScreen(),
           AppRoutes.examScreenRoute: (context) => ExamScreen(),
           AppRoutes.startExamScreenRoute : (context) => StartExamScreen(),
+          AppRoutes.subjectExamsScreenRoute:(context)=> ExamsScreen()
         },
       ),
     );

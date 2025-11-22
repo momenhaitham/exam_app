@@ -9,5 +9,7 @@ class AppEndpoints {
   static const String getQuestionsEndpoint = 'questions';
   static const String checkAnswersEndpoint = 'questions/check';
   static const String subjectExams = "/exams";
-  static const String exam = "/exams{examId}";
+  static const String exam = "/exams/{examId}";
+  
+
 }

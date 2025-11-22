@@ -1,23 +1,27 @@
 import 'package:exam_app_project/core/app_assets.dart';
+import 'package:exam_app_project/core/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PrimaryExamContainer extends StatelessWidget {
   String examsTitle;
   String examName;
+  String id;
   String numberOfQuestions;
   String duration;
   String? from = 1.toString();
   String? to = 6.toString();
-  PrimaryExamContainer({super.key,required this.examsTitle , required this.examName, required this.numberOfQuestions, required this.duration, this.from, this.to});
+  PrimaryExamContainer({super.key,required this.examsTitle ,required this.id ,required this.examName, required this.numberOfQuestions, required this.duration, this.from, this.to});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        //todo: Navigate with the exam details screen with the ID>>>>>>>>
+        Navigator.of(context).pushNamed(AppRoutes.startExamScreenRoute,arguments:id);
+      },
       child: Column(
         children: [
-          Text(examsTitle,style: TextStyle(color: Colors.black,fontSize: 16.sp , fontWeight: FontWeight.w500),),
           SizedBox(height: 20.h,),
           Container(
             margin: EdgeInsets.only(bottom: 15.h),
