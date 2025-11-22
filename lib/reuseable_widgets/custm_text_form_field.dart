@@ -6,6 +6,7 @@ typedef validator=String? Function(String?)?;
 typedef OnChangedValidator=void Function(String)?;
 
 class CustmTextFormField extends StatelessWidget {
+  double? borderRadius;
   Color? enabledBorderColor;
   Color? foucsedBorderColor;
   String? labelText;
@@ -27,6 +28,7 @@ class CustmTextFormField extends StatelessWidget {
   bool? ObscureText;
 
   CustmTextFormField({
+    this.borderRadius,
     this.enabledBorderColor,
     this.foucsedBorderColor,
     this.labelText,
@@ -58,21 +60,21 @@ class CustmTextFormField extends StatelessWidget {
         ) ,
         enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(width: 2,color:enabledBorderColor??Colors.grey),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(borderRadius??12),
         ),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(width: 2,color:foucsedBorderColor??Colors.grey),
-            borderRadius:BorderRadius.circular(12),),
+            borderRadius:BorderRadius.circular(borderRadius??12),),
         errorBorder:OutlineInputBorder(
           borderSide: BorderSide(width: 2,color:enabledBorderColor??Colors.grey),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(borderRadius??12),
         ),
         enabled: true,
         labelText: labelText??null,
         labelStyle: labelTextStyle??null,
         hintText: hintText??null,
         hintStyle: hintTextStyle??null,
-        prefix: prefix??null,
+        
         suffix: sufix??null,
         prefixIcon: prefixIcon,
         suffixIcon: sufixIcon

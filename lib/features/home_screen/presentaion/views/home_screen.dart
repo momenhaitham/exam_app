@@ -16,6 +16,7 @@ class HomeScreen extends StatefulWidget{
 class _HomeScreenState extends State<HomeScreen> {
   @override
   HomeScreenViewmodel homeScreenViewmodel = HomeScreenViewmodel();
+  
 
   Widget build(BuildContext context) {
     return BlocProvider<HomeScreenViewmodel>(
@@ -60,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
           ),
+          body: homeScreenViewmodel.Tabs[homeScreenViewmodel.SelectedTab],
         );
         } ,
       ),

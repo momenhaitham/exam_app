@@ -1,8 +1,14 @@
 class AppRoutes {
   static const String LoginScreenRoute = "LoginScreenRoute";
   static const String ForgetPasswordScreenRoute = "ForgetPasswordScreenRoute";
-  static const String EmailVerificationScreenRoute = "EmailVerificationScreenRoute";
+  static const String EmailVerificationScreenRoute =
+      "EmailVerificationScreenRoute";
   static const String ResetPasswordScreenRoute = "ResetPasswordScreenRoute";
   static const String signupScreenRoute = "signupScreenRoute";
   static const String HomeScreenRoute = "HomeScreenRoute";
+  static const String examScreenRoute = "ExamScreenRoute";
+  static const String examScoreScreenRoute = "ExamScoreScreenRoute";  static const String examsScreenRoute = "examsScreenRoute";
+  static const String startExamScreenRoute = "startExamScreenRoute";
+  static const String subjectExamsScreenRoute = "subjectExamsScreenRoute";
+
 }
