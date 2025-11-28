@@ -1,5 +1,6 @@
 import 'package:exam_app_project/config/Di/di.dart';
 import 'package:exam_app_project/config/app_provider/app_provider.dart';
+import 'package:exam_app_project/config/hive_setup/hive_setup.dart';
 import 'package:exam_app_project/core/app_routes.dart';
 import 'package:exam_app_project/core/app_theme.dart';
 import 'package:exam_app_project/features/explore_tab/exam/presentaion/views/screens/exam_screen.dart';
@@ -16,8 +17,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();  
-
+  await initHive();
   runApp(ChangeNotifierProvider(
     create: (context)=> AppProvider(),
     child: MyApp(),

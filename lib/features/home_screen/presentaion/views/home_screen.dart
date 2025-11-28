@@ -54,14 +54,13 @@ class _HomeScreenState extends State<HomeScreen> {
               icon:Image.asset(AppAssets.profileUnselected),label:AppStrings.profile),
             ],
               elevation: 0,
-              currentIndex:homeScreenViewmodel.SelectedTab ,
+              currentIndex:homeScreenViewmodel.selectedTab,
               onTap: (selected){
-                homeScreenViewmodel.SelectedTab=selected;
-                setState(() {});
+                homeScreenViewmodel.switchTabs(selected);
               },
             ),
           ),
-          body: homeScreenViewmodel.Tabs[homeScreenViewmodel.SelectedTab],
+          body: homeScreenViewmodel.currentSelectedTab,
         );
         } ,
       ),

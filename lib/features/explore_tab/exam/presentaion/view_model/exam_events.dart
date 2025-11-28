@@ -1,6 +1,7 @@
 import 'package:exam_app_project/features/explore_tab/exam/domain/models/answer_item_model.dart';
+import 'package:exam_app_project/features/explore_tab/exam/domain/models/exam_info_model.dart';
 
-abstract class ExamEvents {}
+sealed class ExamEvents {}
 
 class GetQuestionsEvent extends ExamEvents {
   final String id;
@@ -20,3 +21,10 @@ class SubmitAnswersEvent extends ExamEvents {
   final List<AnswerItemModel> answers;
   SubmitAnswersEvent(this.answers, {required this.token});
 }
+
+
+class SaveExamInfo extends ExamEvents {
+  ExamInfoModel examInfoModel;
+  SaveExamInfo({required this.examInfoModel});
+}
+

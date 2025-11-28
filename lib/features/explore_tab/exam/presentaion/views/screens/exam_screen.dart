@@ -4,6 +4,7 @@ import 'package:exam_app_project/core/app_colors.dart';
 import 'package:exam_app_project/core/app_strings.dart';
 import 'package:exam_app_project/core/app_styles.dart';
 import 'package:exam_app_project/features/explore_tab/exam/domain/models/answer_item_model.dart';
+import 'package:exam_app_project/features/explore_tab/exam/domain/models/exam_info_model.dart';
 import 'package:exam_app_project/features/explore_tab/exam/presentaion/view_model/exam_events.dart';
 import 'package:exam_app_project/features/explore_tab/exam/presentaion/view_model/exam_states.dart';
 import 'package:exam_app_project/features/explore_tab/exam/presentaion/view_model/exam_view_model.dart';
@@ -14,6 +15,7 @@ import 'package:exam_app_project/reuseable_widgets/custm_elevated_button.dart';
 import 'package:exam_app_project/reuseable_widgets/error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class ExamScreen extends StatefulWidget {
@@ -219,13 +221,22 @@ class _ExamScreenState extends State<ExamScreen> {
                           const SizedBox(width: 16),
                           Expanded(
                             child: CustmElevatedButton(
-                              onpressed: () {
+                              onpressed: ()async {
                                 if (currentQuestionIndex < totalQuestions - 1) {
                                   setState(() {
                                     currentQuestionIndex++;
                                     selectedOption = null;
                                   });
                                 } else {
+                                  //Todo:save exam info useing hive
+                                  ExamInfoModel examInfoModel =  ExamInfoModel(
+                                    id: questions[0].examInfo.id,
+                                    title: questions[0].examInfo.title, 
+                                    duration: questions[0].examInfo.duration, 
+                                    numberOfQuestions: questions[0].examInfo.numberOfQuestions,
+                                    correctedQuestions: viewModel.answeredQuestions
+                                  );
+                                  viewModel.doIntent(SaveExamInfo(examInfoModel: examInfoModel));
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(

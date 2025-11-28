@@ -4,9 +4,11 @@ import 'package:exam_app_project/config/base_response/base_response.dart';
 import 'package:exam_app_project/config/base_state/base_state.dart';
 import 'package:exam_app_project/features/explore_tab/exam/domain/models/answer_item_model.dart';
 import 'package:exam_app_project/features/explore_tab/exam/domain/models/check_answers_result_model.dart';
+import 'package:exam_app_project/features/explore_tab/exam/domain/models/exam_info_model.dart';
 import 'package:exam_app_project/features/explore_tab/exam/domain/models/question_model.dart';
 import 'package:exam_app_project/features/explore_tab/exam/domain/use_cases/check_answers_usecase.dart';
 import 'package:exam_app_project/features/explore_tab/exam/domain/use_cases/get_questions_usecase.dart';
+import 'package:exam_app_project/features/explore_tab/exam/domain/use_cases/save_exam_info_usecase.dart';
 import 'package:exam_app_project/features/explore_tab/exam/presentaion/view_model/exam_events.dart';
 import 'package:exam_app_project/features/explore_tab/exam/presentaion/view_model/exam_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,26 +16,31 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class ExamViewModel extends Cubit<ExamStates> {
-  ExamViewModel(this._getQuestionsUsecase, this._checkAnswersUsecase)
+  ExamViewModel(this._getQuestionsUsecase, this._checkAnswersUsecase,this._saveExamInfoUsecase)
     : super(ExamStates());
 
   final GetQuestionsUsecase _getQuestionsUsecase;
   final CheckAnswersUsecase _checkAnswersUsecase;
+  final SaveExamInfoUsecase _saveExamInfoUsecase;
+  int answeredQuestions =0;
 
   void doIntent(ExamEvents event) {
     switch (event) {
       case GetQuestionsEvent():
-        getExamQuestions(id: event.id, token: event.token);
+        _getExamQuestions(id: event.id, token: event.token);
       case SelectAnswerEvent():
-        selectAnswer(event.answer);
+        answeredQuestions++;
+        _selectAnswer(event.answer);
       case SubmitAnswersEvent():
-        submitAnswers(token: event.token, answers: event.answers);
+        _submitAnswers(token: event.token, answers: event.answers);
+      case SaveExamInfo():
+        _saveExamInfo(event.examInfoModel);
     }
   }
 
-  void selectAnswer(AnswerItemModel answer) {
+  void _selectAnswer(AnswerItemModel answer) {
     final currentAnswers = state.selectedAnswers ?? [];
-
+    
     currentAnswers.removeWhere((ans) => ans.questionId == answer.questionId);
 
     currentAnswers.add(answer);
@@ -42,7 +49,7 @@ class ExamViewModel extends Cubit<ExamStates> {
     log(currentAnswers.toString());
   }
 
-  void getExamQuestions({required String id, required String token}) async {
+  void _getExamQuestions({required String id, required String token}) async {
     emit(
       state.copyWith(
         newQuestions: BaseState<List<QuestionModel>>(isLoading: true),
@@ -76,7 +83,7 @@ class ExamViewModel extends Cubit<ExamStates> {
     }
   }
 
-  void submitAnswers({
+  void _submitAnswers({
     required String token,
     List<AnswerItemModel>? answers,
   }) async {
@@ -115,4 +122,10 @@ class ExamViewModel extends Cubit<ExamStates> {
       log('Error submitting answers: ${res.error}');
     }
   }
+
+  void _saveExamInfo(ExamInfoModel examInfoModel) {
+    _saveExamInfoUsecase.call(examInfoModel: examInfoModel);
+  }
+
+
 }

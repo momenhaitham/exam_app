@@ -57,6 +57,7 @@ class QuestionDto {
       correctAnswerKey: correct ?? '',
       type: type ?? '',
       examInfo: ExamInfoModel(
+        id: exam?.id??'',
         title: exam?.title ?? '',
         duration: exam?.duration ?? 0,
         numberOfQuestions: exam?.numberOfQuestions ?? 0,

@@ -11,14 +11,15 @@ class PrimaryExamContainer extends StatelessWidget {
   String duration;
   String? from = 1.toString();
   String? to = 6.toString();
-  PrimaryExamContainer({super.key,required this.examsTitle ,required this.id ,required this.examName, required this.numberOfQuestions, required this.duration, this.from, this.to});
+  String? navigateRoute;
+  PrimaryExamContainer({super.key,required this.examsTitle ,this.navigateRoute,required this.id ,required this.examName, required this.numberOfQuestions, required this.duration, this.from, this.to});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
         //todo: Navigate with the exam details screen with the ID>>>>>>>>
-        Navigator.of(context).pushNamed(AppRoutes.startExamScreenRoute,arguments:id);
+        Navigator.of(context).pushNamed(navigateRoute??AppRoutes.startExamScreenRoute,arguments:id);
       },
       child: Column(
         children: [
