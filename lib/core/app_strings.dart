@@ -16,13 +16,28 @@ class AppStrings {
   static const String NewPassword = "New Password";
   static const String ConfirmPassword = "Confirm Password";
   static const String passwordDoesntMatch = "Password Doesn't Match";
-  static const String passwordSuccessfulyChanged = "Password Successfuly Changed";
+  static const String passwordSuccessfulyChanged =
+      "Password Successfuly Changed";
   static const String dontHaveAnAccount = "Don't have an account ?";
   static const String signUp = "Sign Up";
   static const String explore = "Explore";
   static const String result = "Result";
   static const String profile = "Profile";
-
+  static const String veiwScore = "View score";
+  static const String timeOut = "Time out !!";
+  static const String question = "Question";
+  static const String retry = "Retry";
+  static const String error = "Somthing Went Wrong";
+  static const String back = "Back";
+  static const String finish = "Finish";
+  static const String next = "Next";
+  static const String examScore = "Exam Score";
+  static const String yourScore = 'Your Score';
+  static const String correct = 'Correct';
+  static const String incorrect = 'Incorrect';
+  static const String showResults = 'Show results';
+  static const String startAgain = 'Start again';  static const String survey = "Survey";
+  static const String search = "Search";
   static String signup = "Signup";
   static String enterYourUserName = "Enter your user name";
   static String username = "User name";
@@ -37,4 +52,12 @@ class AppStrings {
   static String notValidUserName = "This user name is not valid";
   static String signupAppBarTitle = "Sign Up";
   static String alreadyHaveAnAccount = "Already have an account?";
+  static const String languages = "Languages";
+  static const String instructions = "Instructions";
+  static const String instructionContent = "Lorem ipsum dolor sit amet consectetur.";
+  static const String startExam = "Start Exam";
+  static const String tokin = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZmZjMGM3OGZiMTlhZDk1NWIyNDRlNSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzYzNjQ2MjExfQ.lZ1fx-1kkqfuTf-RZTA7TCSFVB9ZZaB7O9jxt8HBeIg";
+  static const String noQuestionsAvailable ="No Questions Available";
+  static const String tryAgain = "try again";
+  static const String noExamsFound = "No exams found.";
 }

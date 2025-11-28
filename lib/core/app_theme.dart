@@ -31,9 +31,9 @@ class AppTheme {
       selectedLabelStyle: AppStyles.Medium16Blue,
       unselectedLabelStyle: AppStyles.Medium16Gray,
     ),
-    bottomAppBarTheme: BottomAppBarTheme(
-      color: AppColors.white
-    ),
+    //bottomAppBarTheme: BottomAppBarThemeData(
+    //  color: AppColors.white
+    //),
     );
   
 }

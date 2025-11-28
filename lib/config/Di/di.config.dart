@@ -12,8 +12,66 @@
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
-import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 
+import '../../features/explore_tab/exam/api/api_client/api_client.dart'
+    as _i660;
+import '../../features/explore_tab/exam/api/data_sources/remote/exam_remote_data_source_impl.dart'
+    as _i994;
+import '../../features/explore_tab/exam/data/data_sources/remote/exam_reomote_data_source_contract.dart'
+    as _i264;
+import '../../features/explore_tab/exam/data/repo/exam_repo_impl.dart' as _i953;
+import '../../features/explore_tab/exam/domain/repo/exam_repo_contract.dart'
+    as _i62;
+import '../../features/explore_tab/exam/domain/use_cases/check_answers_usecase.dart'
+    as _i844;
+import '../../features/explore_tab/exam/domain/use_cases/get_questions_usecase.dart'
+    as _i431;
+import '../../features/explore_tab/exam/presentaion/view_model/exam_view_model.dart'
+    as _i61;
+import '../../features/explore_tab/start_exam/api/api_client/api_client.dart'
+    as _i557;
+import '../../features/explore_tab/start_exam/api/data_sources_impl/get_exam_data_source_impl.dart'
+    as _i218;
+import '../../features/explore_tab/start_exam/data/data_sources/get_exam_data_source_contract.dart'
+    as _i533;
+import '../../features/explore_tab/start_exam/data/repo/get_exam_repo_impl.dart'
+    as _i385;
+import '../../features/explore_tab/start_exam/domain/repo/get_exam_repo_contract.dart'
+    as _i744;
+import '../../features/explore_tab/start_exam/domain/use_cases/get_exam_use_case.dart'
+    as _i928;
+import '../../features/explore_tab/start_exam/presention/view_model/get_exam_view_model.dart'
+    as _i450;
+import '../../features/explore_tab/subject_exams/api/api_client/api_client.dart'
+    as _i242;
+import '../../features/explore_tab/subject_exams/api/data_sources_impl/subject_exams_impl.dart'
+    as _i920;
+import '../../features/explore_tab/subject_exams/data/data_sources/subject_exams_data_source_contract.dart'
+    as _i388;
+import '../../features/explore_tab/subject_exams/data/repos/subject_exams_repo_impl.dart'
+    as _i359;
+import '../../features/explore_tab/subject_exams/domain/repos/subject_exams_repo_contract.dart'
+    as _i844;
+import '../../features/explore_tab/subject_exams/domain/use_cases/get_allexams_usecase.dart'
+    as _i323;
+import '../../features/explore_tab/subject_exams/domain/use_cases/get_subject_exams_usecase.dart'
+    as _i399;
+import '../../features/explore_tab/subject_exams/presentation/view_model/subject_exams_view_model.dart'
+    as _i682;
+import '../../features/explore_tab/subjects_screen/api/api_client/api_client.dart'
+    as _i656;
+import '../../features/explore_tab/subjects_screen/api/data_sources_impls/getall_subjects_remote_data_source_impl.dart'
+    as _i471;
+import '../../features/explore_tab/subjects_screen/data/data_sources/getall_subjects_remote_data_source_contract.dart'
+    as _i411;
+import '../../features/explore_tab/subjects_screen/data/repo/getall_subjects_repo_impl.dart'
+    as _i149;
+import '../../features/explore_tab/subjects_screen/domain/repo/getall_subjects_repo_contract.dart'
+    as _i842;
+import '../../features/explore_tab/subjects_screen/domain/use_cases/getall_subjects_usecase.dart'
+    as _i546;
+import '../../features/explore_tab/subjects_screen/presentaion/view_model/subjects_screen_viewmodel.dart'
+    as _i939;
 import '../../features/forget_password/api/api_client/api_client.dart' as _i421;
 import '../../features/forget_password/api/data_sources_impls/forget_password_remote_datasource_impl.dart'
     as _i306;
@@ -61,8 +119,17 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final dioModule = _$DioModule();
-    gh.factory<_i361.Dio>(() => dioModule.provideDio());
-    gh.factory<_i528.PrettyDioLogger>(() => dioModule.dioLogger());
+    gh.singleton<_i361.Dio>(() => dioModule.dio);
+    gh.factory<_i660.ExamApiClient>(() => _i660.ExamApiClient(gh<_i361.Dio>()));
+    gh.factory<_i557.GetExamApiClient>(
+      () => _i557.GetExamApiClient(gh<_i361.Dio>()),
+    );
+    gh.factory<_i242.GetSubjectExamsAPIClient>(
+      () => _i242.GetSubjectExamsAPIClient(gh<_i361.Dio>()),
+    );
+    gh.factory<_i656.SubjectsApiClient>(
+      () => _i656.SubjectsApiClient(gh<_i361.Dio>()),
+    );
     gh.factory<_i421.ForgetPasswordApiClient>(
       () => _i421.ForgetPasswordApiClient(gh<_i361.Dio>()),
     );
@@ -70,24 +137,54 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i334.SignupApiClient>(
       () => _i334.SignupApiClient(gh<_i361.Dio>()),
     );
+    gh.factory<_i411.GetallSubjectsRemoteDataSourceContract>(
+      () => _i471.GetallSubjectsRemoteDataSourceImpl(
+        gh<_i656.SubjectsApiClient>(),
+      ),
+    );
+    gh.factory<_i388.SubjectExamsDataSourceContract>(
+      () => _i920.SubjectExamsImpl(gh<_i242.GetSubjectExamsAPIClient>()),
+    );
     gh.factory<_i106.SignupRemoteDataSourceContract>(
       () => _i825.SignupRemoteDataSourceImpl(gh<_i334.SignupApiClient>()),
     );
     gh.factory<_i159.LoginRemoteDataSourceContract>(
       () => _i367.LoginRemoteDateSourceImpl(gh<_i62.LoginApiClient>()),
     );
+    gh.factory<_i842.GetallSubjectsRepoContract>(
+      () => _i149.GetallSubjectsRepoImpl(
+        gh<_i411.GetallSubjectsRemoteDataSourceContract>(),
+      ),
+    );
     gh.factory<_i997.ForgetPasswordRemoteDatasourceContract>(
       () => _i306.ForgetPasswordRemoteDatasourceImpl(
         gh<_i421.ForgetPasswordApiClient>(),
       ),
+    );
+    gh.factory<_i533.GetExamDataSourceContrcat>(
+      () => _i218.GetExamDataSourceImpl(gh<_i557.GetExamApiClient>()),
     );
     gh.factory<_i665.ForgetPasswordRepoContract>(
       () => _i576.ForgetPasswordRepoImpl(
         gh<_i997.ForgetPasswordRemoteDatasourceContract>(),
       ),
     );
+    gh.factory<_i264.ExamReomoteDataSourceContract>(
+      () => _i994.ExamRemoteDataSourceImpl(gh<_i660.ExamApiClient>()),
+    );
+    gh.factory<_i546.GetallSubjectsUsecase>(
+      () => _i546.GetallSubjectsUsecase(gh<_i842.GetallSubjectsRepoContract>()),
+    );
+    gh.factory<_i844.SubjectExamsRepoContract>(
+      () => _i359.SubjectExamsRepoImpl(
+        gh<_i388.SubjectExamsDataSourceContract>(),
+      ),
+    );
     gh.factory<_i677.SignupRepoContract>(
       () => _i868.SignupRepoImpl(gh<_i106.SignupRemoteDataSourceContract>()),
+    );
+    gh.factory<_i939.SubjectsScreenViewmodel>(
+      () => _i939.SubjectsScreenViewmodel(gh<_i546.GetallSubjectsUsecase>()),
     );
     gh.lazySingleton<_i998.VirefyResetCodeUsecase>(
       () =>
@@ -109,17 +206,57 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i180.LoginRepoContract>(
       () => _i176.LoginRepoImpl(gh<_i159.LoginRemoteDataSourceContract>()),
     );
+    gh.factory<_i323.GetAllExamsUsecase>(
+      () => _i323.GetAllExamsUsecase(gh<_i844.SubjectExamsRepoContract>()),
+    );
+    gh.factory<_i399.GetSubjectExamsUsecase>(
+      () => _i399.GetSubjectExamsUsecase(gh<_i844.SubjectExamsRepoContract>()),
+    );
+    gh.factory<_i744.GetExamRepoContract>(
+      () => _i385.GetExamRepoImpl(gh<_i533.GetExamDataSourceContrcat>()),
+    );
+    gh.factory<_i62.ExamRepoContract>(
+      () => _i953.ExamRepoImpl(
+        examRemoteDataSource: gh<_i264.ExamReomoteDataSourceContract>(),
+      ),
+    );
     gh.factory<_i538.LoginUsecase>(
       () => _i538.LoginUsecase(gh<_i180.LoginRepoContract>()),
     );
     gh.factory<_i25.SignupUsecase>(
       () => _i25.SignupUsecase(gh<_i677.SignupRepoContract>()),
     );
+    gh.factory<_i928.GetExamUseCase>(
+      () => _i928.GetExamUseCase(
+        getExamRepoContract: gh<_i744.GetExamRepoContract>(),
+      ),
+    );
+    gh.factory<_i450.GetExamViewModel>(
+      () => _i450.GetExamViewModel(gh<_i928.GetExamUseCase>()),
+    );
     gh.factory<_i355.LoginViewModel>(
       () => _i355.LoginViewModel(gh<_i538.LoginUsecase>()),
     );
+    gh.factory<_i682.SubjectExamsViewModel>(
+      () => _i682.SubjectExamsViewModel(
+        gh<_i399.GetSubjectExamsUsecase>(),
+        gh<_i323.GetAllExamsUsecase>(),
+      ),
+    );
+    gh.factory<_i844.CheckAnswersUsecase>(
+      () => _i844.CheckAnswersUsecase(examRepo: gh<_i62.ExamRepoContract>()),
+    );
+    gh.factory<_i431.GetQuestionsUsecase>(
+      () => _i431.GetQuestionsUsecase(examRepo: gh<_i62.ExamRepoContract>()),
+    );
     gh.factory<_i560.SignupViewModel>(
       () => _i560.SignupViewModel(gh<_i25.SignupUsecase>()),
+    );
+    gh.factory<_i61.ExamViewModel>(
+      () => _i61.ExamViewModel(
+        gh<_i431.GetQuestionsUsecase>(),
+        gh<_i844.CheckAnswersUsecase>(),
+      ),
     );
     return this;
   }
