@@ -133,7 +133,7 @@ class StartExamScreen extends StatelessWidget {
               Text(state.getExamState!.errorMessage!),
               ElevatedButton(onPressed: (){
               viewModel.doIntent(GetExamEvent() , examId ,provider.token);
-              }, child: Text("try again"))
+              }, child: Text(AppStrings.tryAgain))
               ],
                        ),
             ),

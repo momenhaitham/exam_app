@@ -57,7 +57,7 @@ class ExamsScreen extends StatelessWidget {
           ));
         }else if(state.subjectExamsState?.data != null && state.subjectExamsState?.isLoading==false){
           if(state.subjectExamsState?.data?.exams.isEmpty == null||state.subjectExamsState!.data!.exams.isEmpty){
-            return const Center(child: Text("No exams found."));
+            return const Center(child: Text(AppStrings.noExamsFound));
           }else
            return Expanded(
             child: Padding(

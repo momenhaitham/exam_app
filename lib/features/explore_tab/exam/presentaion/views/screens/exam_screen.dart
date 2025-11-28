@@ -261,7 +261,7 @@ class _ExamScreenState extends State<ExamScreen> {
             } else if (!(state.questions?.isLoading ?? false) &&
                 state.questions?.data != null &&
                 state.questions!.data!.isEmpty) {
-              return const Center(child: Text("No Questions Available"));
+              return const Center(child: Text(AppStrings.noQuestionsAvailable));
             }
             // Loading State
             else {
