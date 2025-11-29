@@ -12,6 +12,7 @@ class PrimaryExamContainer extends StatelessWidget {
   String? from = 1.toString();
   String? to = 6.toString();
   String? navigateRoute;
+  
   PrimaryExamContainer({super.key,required this.examsTitle ,this.navigateRoute,required this.id ,required this.examName, required this.numberOfQuestions, required this.duration, this.from, this.to});
 
   @override
