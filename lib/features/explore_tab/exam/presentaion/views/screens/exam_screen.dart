@@ -15,7 +15,6 @@ import 'package:exam_app_project/reuseable_widgets/custm_elevated_button.dart';
 import 'package:exam_app_project/reuseable_widgets/error_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class ExamScreen extends StatefulWidget {

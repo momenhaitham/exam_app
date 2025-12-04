@@ -9,11 +9,12 @@ class PrimaryExamContainer extends StatelessWidget {
   String id;
   String numberOfQuestions;
   String duration;
+  int? correctedQuestions;
   String? from = 1.toString();
   String? to = 6.toString();
   String? navigateRoute;
   
-  PrimaryExamContainer({super.key,required this.examsTitle ,this.navigateRoute,required this.id ,required this.examName, required this.numberOfQuestions, required this.duration, this.from, this.to});
+  PrimaryExamContainer({super.key,this.correctedQuestions,required this.examsTitle ,this.navigateRoute,required this.id ,required this.examName, required this.numberOfQuestions, required this.duration, this.from, this.to});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,8 @@ class PrimaryExamContainer extends StatelessWidget {
                     SizedBox(height: 5.h,),
                     Text(numberOfQuestions,style: TextStyle(color: Colors.grey,fontSize: 13.sp , fontWeight: FontWeight.w400),),
                     SizedBox(height: 15.h,),
-                    Text("From: $from    To: $to",style: TextStyle(color: Colors.black,fontSize: 16.sp),),
+                    Text(correctedQuestions==null?"From: $from    To: $to":"$correctedQuestions corrected answers in $duration",
+                    style: correctedQuestions==null? TextStyle(color: Colors.black,fontSize: 16.sp):TextStyle(color: Colors.blue,fontSize: 16.sp)),
                   ],
                 ),
                 SizedBox(width: 20.h,),

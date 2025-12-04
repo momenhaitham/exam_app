@@ -69,8 +69,7 @@ class ResultTab extends StatelessWidget{
                             examName: exam.title,
                             numberOfQuestions:
                                  exam.numberOfQuestions.toString(),
-                            from: "1",
-                            to: "6",
+                            correctedQuestions: exam.correctedQuestions,
                           );
                         },
                       ),
