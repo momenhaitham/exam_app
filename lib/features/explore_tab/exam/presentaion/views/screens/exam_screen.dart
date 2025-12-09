@@ -5,6 +5,7 @@ import 'package:exam_app_project/core/app_strings.dart';
 import 'package:exam_app_project/core/app_styles.dart';
 import 'package:exam_app_project/features/explore_tab/exam/domain/models/answer_item_model.dart';
 import 'package:exam_app_project/features/explore_tab/exam/domain/models/exam_info_model.dart';
+import 'package:exam_app_project/features/explore_tab/exam/domain/models/saved_question_model.dart';
 import 'package:exam_app_project/features/explore_tab/exam/presentaion/view_model/exam_events.dart';
 import 'package:exam_app_project/features/explore_tab/exam/presentaion/view_model/exam_states.dart';
 import 'package:exam_app_project/features/explore_tab/exam/presentaion/view_model/exam_view_model.dart';
@@ -70,6 +71,7 @@ class _ExamScreenState extends State<ExamScreen> {
           actions: [
             BlocBuilder<ExamViewModel, ExamStates>(
               builder: (context, state) {
+                
                 if (state.questions?.data != null &&
                     state.questions!.data!.isNotEmpty) {
                   final duration =
@@ -79,6 +81,27 @@ class _ExamScreenState extends State<ExamScreen> {
                     child: TimerWidget(
                       timeInMinutes: duration.toString(),
                       onTimeEnded: () {
+                        final questions = state.questions!.data!;
+                        final totalQuestions = questions.length;
+                        final currentQuestion = questions[currentQuestionIndex];
+                        final selectedAnswers = state.selectedAnswers ?? [];
+                        List<SavedQuestionModel> savedQuestions = questions.map((e){
+                          List<String> answers = e.answers;
+                          return SavedQuestionModel(
+                            question: e.questionText,
+                            answers: answers
+                        );}).toList();
+
+                                  
+                        ExamInfoModel examInfoModel =  ExamInfoModel(
+                          id: questions[0].examInfo.id,
+                          title: questions[0].examInfo.title, 
+                          duration: questions[0].examInfo.duration, 
+                          numberOfQuestions: questions[0].examInfo.numberOfQuestions,
+                          numberOfCorrectedQuestions: viewModel.answeredQuestions,
+                          savedQuestions: savedQuestions,
+                          answeredQuestions: selectedAnswers.map((e) => e.correct,).toList()
+                        );
                         Navigator.pop(context);
                         Navigator.pushReplacement(
                           context,
@@ -86,6 +109,7 @@ class _ExamScreenState extends State<ExamScreen> {
                             builder: (context) => ExamScoreScreen(
                               numberOfquestions: state.questions!.data!.length,
                               result: state.selectedAnswers ?? [],
+                              savedExam: examInfoModel,
                             ),
                           ),
                         );
@@ -228,21 +252,31 @@ class _ExamScreenState extends State<ExamScreen> {
                                   });
                                 } else {
                                   //Todo:save exam info useing hive
+                                  List<SavedQuestionModel> savedQuestions = questions.map((e){
+                                    List<String> answers = e.answers;
+                                    return SavedQuestionModel(
+                                    question: e.questionText,
+                                    answers: answers
+                                  );}).toList();
+
+                                  
                                   ExamInfoModel examInfoModel =  ExamInfoModel(
                                     id: questions[0].examInfo.id,
                                     title: questions[0].examInfo.title, 
                                     duration: questions[0].examInfo.duration, 
                                     numberOfQuestions: questions[0].examInfo.numberOfQuestions,
-                                    correctedQuestions: viewModel.answeredQuestions
+                                    numberOfCorrectedQuestions: viewModel.answeredQuestions,
+                                    savedQuestions: savedQuestions,
+                                    answeredQuestions: selectedAnswers.map((e) => e.correct,).toList()
                                   );
-                                  viewModel.doIntent(SaveExamInfo(examInfoModel: examInfoModel));
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => ExamScoreScreen(
                                         numberOfquestions:
                                             state.questions!.data!.length,
-                                        result: selectedAnswers,
+                                        result: selectedAnswers,//
+                                        savedExam: examInfoModel ,
                                       ),
                                     ),
                                   );

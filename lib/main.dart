@@ -10,6 +10,7 @@ import 'package:exam_app_project/features/forget_password/presentaion/views/rese
 import 'package:exam_app_project/features/explore_tab/start_exam/presention/views/start_exam_screen.dart';
 import 'package:exam_app_project/features/home_screen/presentaion/views/home_screen.dart';
 import 'package:exam_app_project/features/login/presentaion/views/login_screen.dart';
+import 'package:exam_app_project/features/result_tab/presentaion/views/saved_exam_screen.dart';
 import 'package:exam_app_project/features/signup/presentation/views/signup_screen.dart';
 import 'package:exam_app_project/features/explore_tab/subject_exams/presentation/views/exams_screen.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,9 @@ class _MyAppState extends State<MyApp> {
           AppRoutes.HomeScreenRoute: (context) => HomeScreen(),
           AppRoutes.examScreenRoute: (context) => ExamScreen(),
           AppRoutes.startExamScreenRoute : (context) => StartExamScreen(),
-          AppRoutes.subjectExamsScreenRoute:(context)=> ExamsScreen()
+          AppRoutes.subjectExamsScreenRoute:(context)=> ExamsScreen(),
+          AppRoutes.savedExamScreenRoute:(context)=> SavedExamScreen()
+
         },
       ),
     );

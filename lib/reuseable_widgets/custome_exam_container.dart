@@ -6,22 +6,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class PrimaryExamContainer extends StatelessWidget {
   String examsTitle;
   String examName;
-  String id;
+  String? id;
   String numberOfQuestions;
   String duration;
   int? correctedQuestions;
   String? from = 1.toString();
   String? to = 6.toString();
   String? navigateRoute;
+  dynamic? arguments;
   
-  PrimaryExamContainer({super.key,this.correctedQuestions,required this.examsTitle ,this.navigateRoute,required this.id ,required this.examName, required this.numberOfQuestions, required this.duration, this.from, this.to});
+  PrimaryExamContainer({super.key,this.correctedQuestions,this.arguments,required this.examsTitle ,this.navigateRoute, this.id ,required this.examName, required this.numberOfQuestions, required this.duration, this.from, this.to});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
         //todo: Navigate with the exam details screen with the ID>>>>>>>>
-        Navigator.of(context).pushNamed(navigateRoute??AppRoutes.startExamScreenRoute,arguments:id);
+        Navigator.of(context).pushNamed(navigateRoute??AppRoutes.startExamScreenRoute,arguments:arguments??id);
       },
       child: Column(
         children: [
@@ -51,22 +52,26 @@ class PrimaryExamContainer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(examName,style: TextStyle(color: Colors.black,fontSize: 16.sp , fontWeight: FontWeight.w500),),
+                    Row(children: [
+                      Text(examName,style: TextStyle(color: Colors.black,fontSize: 16.sp , fontWeight: FontWeight.w500),),
+                      SizedBox(width: 30.w,),
+                      Text("$duration Minutes",style: TextStyle(color: Colors.blue,fontSize: 13.sp , fontWeight: FontWeight.w400),)
+                    ]),
                     SizedBox(height: 5.h,),
                     Text(numberOfQuestions,style: TextStyle(color: Colors.grey,fontSize: 13.sp , fontWeight: FontWeight.w400),),
                     SizedBox(height: 15.h,),
-                    Text(correctedQuestions==null?"From: $from    To: $to":"$correctedQuestions corrected answers in $duration",
-                    style: correctedQuestions==null? TextStyle(color: Colors.black,fontSize: 16.sp):TextStyle(color: Colors.blue,fontSize: 16.sp)),
+                    Text(correctedQuestions==null?"From: $from    To: $to":"$correctedQuestions corrected answers in $duration minutes",
+                    style: correctedQuestions==null? TextStyle(color: Colors.black,fontSize: 16.sp):TextStyle(color: Colors.blue,fontSize: 12.sp)),
                   ],
                 ),
-                SizedBox(width: 20.h,),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("$duration Minutes",style: TextStyle(color: Colors.blue,fontSize: 13.sp , fontWeight: FontWeight.w400),),
-                  ],
-                ),
+              //  SizedBox(width: 20.h,),
+              //  Column(
+              //    mainAxisAlignment: MainAxisAlignment.start,
+              //    crossAxisAlignment: CrossAxisAlignment.start,
+              //    children: [
+              //      ,
+              //    ],
+              //  ),
               ],
             ),
           ),

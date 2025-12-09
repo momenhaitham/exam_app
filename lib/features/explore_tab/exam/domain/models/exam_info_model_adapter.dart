@@ -1,3 +1,4 @@
+import 'package:exam_app_project/features/explore_tab/exam/domain/models/saved_question_model.dart';
 import 'package:hive/hive.dart';
 import 'exam_info_model.dart';
 
@@ -11,8 +12,10 @@ class ExamInfoModelAdapter extends TypeAdapter<ExamInfoModel> {
       title: reader.readString(),
       duration: reader.readInt(),
       numberOfQuestions: reader.readInt(),
-      correctedQuestions: reader.read(),
+      numberOfCorrectedQuestions: reader.read(),
       id: reader.readString(),
+      savedQuestions: reader.readList().cast<SavedQuestionModel>(),
+      answeredQuestions: reader.readList().cast<String>()
     );
   }
 
@@ -21,7 +24,9 @@ class ExamInfoModelAdapter extends TypeAdapter<ExamInfoModel> {
     writer.writeString(obj.title);
     writer.writeInt(obj.duration);
     writer.writeInt(obj.numberOfQuestions);
-    writer.write(obj.correctedQuestions);
+    writer.write(obj.numberOfCorrectedQuestions);
     writer.writeString(obj.id??"");
+    writer.writeList(obj.savedQuestions??[]);
+    writer.writeList(obj.answeredQuestions??[]);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:exam_app_project/config/Di/di.dart';
+import 'package:exam_app_project/core/app_routes.dart';
 import 'package:exam_app_project/core/app_strings.dart';
 import 'package:exam_app_project/core/app_styles.dart';
 import 'package:exam_app_project/features/result_tab/presentaion/view_model/result_tab_events.dart';
@@ -63,13 +64,15 @@ class ResultTab extends StatelessWidget{
                         itemBuilder: (context, index) {
                           final exam = state.resultTabState!.data![index];
                           return PrimaryExamContainer(
-                            id: exam.id??"",
+                            navigateRoute: AppRoutes.savedExamScreenRoute ,
+                            arguments: exam,
                             examsTitle: exam.title,
                             duration: exam.duration.toString(),
                             examName: exam.title,
                             numberOfQuestions:
                                  exam.numberOfQuestions.toString(),
-                            correctedQuestions: exam.correctedQuestions,
+                            correctedQuestions: exam.numberOfCorrectedQuestions,
+                            
                           );
                         },
                       ),

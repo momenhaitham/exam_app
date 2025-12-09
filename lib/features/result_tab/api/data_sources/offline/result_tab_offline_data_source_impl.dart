@@ -8,7 +8,7 @@ import 'package:injectable/injectable.dart';
 class ResultTabOfflineDataSourceImpl extends ResultTabDataSourceContract{
   @override
   Future<BaseResponse<List<ExamInfoModel>>> getSavedExams()async {
-    var box =await Hive.openBox<ExamInfoModel>("exams1");
+    var box =await Hive.openBox<ExamInfoModel>("exams2");
     try{
       List<ExamInfoModel> exams = box.values.toList();
       return SuccessResponse<List<ExamInfoModel>>(data: exams);

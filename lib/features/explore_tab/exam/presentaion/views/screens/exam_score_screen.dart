@@ -6,6 +6,8 @@ import 'package:exam_app_project/core/app_colors.dart';
 import 'package:exam_app_project/core/app_strings.dart';
 import 'package:exam_app_project/core/app_styles.dart';
 import 'package:exam_app_project/features/explore_tab/exam/domain/models/answer_item_model.dart';
+import 'package:exam_app_project/features/explore_tab/exam/domain/models/exam_info_model.dart';
+import 'package:exam_app_project/features/explore_tab/exam/domain/models/saved_question_model.dart';
 import 'package:exam_app_project/features/explore_tab/exam/presentaion/view_model/exam_events.dart';
 import 'package:exam_app_project/features/explore_tab/exam/presentaion/view_model/exam_states.dart';
 import 'package:exam_app_project/features/explore_tab/exam/presentaion/view_model/exam_view_model.dart';
@@ -20,16 +22,23 @@ import 'package:provider/provider.dart';
 class ExamScoreScreen extends StatelessWidget {
   final List<AnswerItemModel> result;
   final int numberOfquestions;
+  ExamInfoModel savedExam ;
   ExamScoreScreen({
     super.key,
     required this.result,
     required this.numberOfquestions,
+    required this.savedExam
   });
   final ExamViewModel viewModel = getIt<ExamViewModel>();
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AppProvider>(context);
-
+    viewModel.doIntent(
+          SubmitAnswersEvent(
+            result,
+            token:
+            provider.token!,
+          ),);
     log(result.toString());
     return BlocProvider<ExamViewModel>(
       create: (context) {
@@ -38,13 +47,7 @@ class ExamScoreScreen extends StatelessWidget {
         log(
           'Answers: ${result.map((a) => '${a.questionId}: ${a.correct}').join(', ')}',
         );
-        return viewModel..doIntent(
-          SubmitAnswersEvent(
-            result,
-            token:
-                provider.token!,
-          ),
-        );
+        return viewModel;
       },
       child: Scaffold(
         backgroundColor: AppColors.white,
@@ -67,9 +70,36 @@ class ExamScoreScreen extends StatelessWidget {
                 return CustomErrorWidget();
               } else if (!(state.checkAnswersResult!.isLoading ?? false) &&
                   state.checkAnswersResult?.data != null) {
-                final correctCount =
-                    state.checkAnswersResult!.data!.correctCount;
+                //======================================================================================================================
 
+                final correctCount = state.checkAnswersResult!.data!.correctCount;
+
+
+                //if(state.checkAnswersResult!.data!.correctQuestions.isNotEmpty){
+                //}
+                //int allQuistions = state.checkAnswersResult!.data!.wrongQuestions.length+state.checkAnswersResult!.data!.correctQuestions.length;
+                
+                if(state.checkAnswersResult!.data!.wrongQuestions.isNotEmpty&&state.checkAnswersResult!.data!.correctQuestions.isNotEmpty){
+                for(int i=0;i<=state.checkAnswersResult!.data!.wrongQuestions.length-1;i++){
+                  savedExam.savedQuestions![i].wrongAnswer = state.checkAnswersResult?.data?.wrongQuestions[i].inCorrectAnswer;
+                }
+                for(int i=0;i<=state.checkAnswersResult!.data!.correctQuestions.length-1;i++){
+                  savedExam.savedQuestions![i].trueAnswer = state.checkAnswersResult?.data?.correctQuestions[i].correctAnswer;
+                }
+                }else if (state.checkAnswersResult!.data!.wrongQuestions.isEmpty&&state.checkAnswersResult!.data!.correctQuestions.isNotEmpty){
+                  for(int i=0;i<=state.checkAnswersResult!.data!.correctQuestions.length-1;i++){
+                  savedExam.savedQuestions![i].trueAnswer = state.checkAnswersResult?.data?.correctQuestions[i].correctAnswer;
+                }
+                }else if (state.checkAnswersResult!.data!.wrongQuestions.isNotEmpty&&state.checkAnswersResult!.data!.correctQuestions.isEmpty){
+                  for(int i=0;i<=state.checkAnswersResult!.data!.wrongQuestions.length-1;i++){
+                  savedExam.savedQuestions![i].wrongAnswer = state.checkAnswersResult?.data?.wrongQuestions[i].inCorrectAnswer;
+                  savedExam.savedQuestions![i].trueAnswer = state.checkAnswersResult?.data?.wrongQuestions[i].correctAnswer;
+                 }
+                }
+                
+
+                //======================================================================================================================
+                viewModel.doIntent(SaveExamInfo(examInfoModel: savedExam));
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

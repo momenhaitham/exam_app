@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 class ExamOfflineDataSourceImpl extends ExamOfflineDataSourceContract{
   @override
   Future<void> saveExamInfo({required ExamInfoModel examInfoModel})async {
-    var box = await Hive.openBox<ExamInfoModel>('exams1');
+    var box = await Hive.openBox<ExamInfoModel>('exams2');
     await box.add(examInfoModel);
     box.close();
     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> exam saved");
