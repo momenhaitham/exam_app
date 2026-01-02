@@ -10,5 +10,6 @@ class AppRoutes {
   static const String examScoreScreenRoute = "ExamScoreScreenRoute";  static const String examsScreenRoute = "examsScreenRoute";
   static const String startExamScreenRoute = "startExamScreenRoute";
   static const String subjectExamsScreenRoute = "subjectExamsScreenRoute";
+  static const String savedExamScreenRoute = "savedExamScreenRoute";
 
 }

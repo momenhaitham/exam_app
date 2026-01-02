@@ -14,6 +14,9 @@ class CorrectOrWrongQuestionResultDto {
   @JsonKey(name: 'correctAnswer')
   final String correctAnswer;
 
+  @JsonKey(name: 'inCorrectAnswer')
+  final String? wrongAnswer;
+
   @JsonKey(name: 'answers')
   final Map<String, dynamic>? answers;
 
@@ -22,6 +25,7 @@ class CorrectOrWrongQuestionResultDto {
     required this.question,
     required this.correctAnswer,
     this.answers,
+    this.wrongAnswer
   });
 
   factory CorrectOrWrongQuestionResultDto.fromJson(Map<String, dynamic> json) =>
@@ -36,6 +40,7 @@ class CorrectOrWrongQuestionResultDto {
       id: qid,
       questionText: question,
       correctAnswer: correctAnswer,
+      inCorrectAnswer: wrongAnswer
     );
   }
 }

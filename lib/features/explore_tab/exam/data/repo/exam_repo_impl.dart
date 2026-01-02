@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:exam_app_project/config/base_response/base_response.dart';
+import 'package:exam_app_project/features/explore_tab/exam/data/data_sources/offline/exam_offline_data_source_contract.dart';
 import 'package:exam_app_project/features/explore_tab/exam/data/data_sources/remote/exam_reomote_data_source_contract.dart';
 import 'package:exam_app_project/features/explore_tab/exam/data/models/check_answers_models/answer_item_dto.dart';
 import 'package:exam_app_project/features/explore_tab/exam/data/models/check_answers_models/check_answers_request_dto.dart';
@@ -8,14 +9,16 @@ import 'package:exam_app_project/features/explore_tab/exam/data/models/check_ans
 import 'package:exam_app_project/features/explore_tab/exam/data/models/get_questions_models/question_dto.dart';
 import 'package:exam_app_project/features/explore_tab/exam/domain/models/answer_item_model.dart';
 import 'package:exam_app_project/features/explore_tab/exam/domain/models/check_answers_result_model.dart';
+import 'package:exam_app_project/features/explore_tab/exam/domain/models/exam_info_model.dart';
 import 'package:exam_app_project/features/explore_tab/exam/domain/models/question_model.dart';
 import 'package:exam_app_project/features/explore_tab/exam/domain/repo/exam_repo_contract.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: ExamRepoContract)
 class ExamRepoImpl implements ExamRepoContract {
-  ExamRepoImpl({required this.examRemoteDataSource});
+  ExamRepoImpl({required this.examRemoteDataSource,required this.examOfflineDataSource});
   ExamReomoteDataSourceContract examRemoteDataSource;
+  ExamOfflineDataSourceContract examOfflineDataSource;
 
   @override
   Future<BaseResponse<List<QuestionModel>>> getQuestions({
@@ -67,5 +70,10 @@ class ExamRepoImpl implements ExamRepoContract {
           error: checkAnswersResponse.error,
         );
     }
+  }
+
+  @override
+  void saveExamInfo({required ExamInfoModel examInfoModel}) {
+    examOfflineDataSource.saveExamInfo(examInfoModel: examInfoModel);
   }
 }

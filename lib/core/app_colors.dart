@@ -12,4 +12,6 @@ class AppColors {
   static const Color timerGreen = Color(0xff11CE19);
   static const Color red = Color(0xffCC1010);
   static const Color progressIndicatorColor = Color(0xffCFCFCF);
+    static const Color lightRed = Color.fromRGBO(248, 210, 210, 100);
+
 }

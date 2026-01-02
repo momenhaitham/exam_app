@@ -6,6 +6,8 @@ import 'package:exam_app_project/core/app_colors.dart';
 import 'package:exam_app_project/core/app_strings.dart';
 import 'package:exam_app_project/core/app_styles.dart';
 import 'package:exam_app_project/features/explore_tab/exam/domain/models/answer_item_model.dart';
+import 'package:exam_app_project/features/explore_tab/exam/domain/models/exam_info_model.dart';
+import 'package:exam_app_project/features/explore_tab/exam/domain/models/saved_question_model.dart';
 import 'package:exam_app_project/features/explore_tab/exam/presentaion/view_model/exam_events.dart';
 import 'package:exam_app_project/features/explore_tab/exam/presentaion/view_model/exam_states.dart';
 import 'package:exam_app_project/features/explore_tab/exam/presentaion/view_model/exam_view_model.dart';
@@ -20,16 +22,23 @@ import 'package:provider/provider.dart';
 class ExamScoreScreen extends StatelessWidget {
   final List<AnswerItemModel> result;
   final int numberOfquestions;
+  ExamInfoModel savedExam ;
   ExamScoreScreen({
     super.key,
     required this.result,
     required this.numberOfquestions,
+    required this.savedExam
   });
   final ExamViewModel viewModel = getIt<ExamViewModel>();
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AppProvider>(context);
-
+    viewModel.doIntent(
+          SubmitAnswersEvent(
+            result,
+            token:
+            provider.token!,
+          ),);
     log(result.toString());
     return BlocProvider<ExamViewModel>(
       create: (context) {
@@ -38,13 +47,7 @@ class ExamScoreScreen extends StatelessWidget {
         log(
           'Answers: ${result.map((a) => '${a.questionId}: ${a.correct}').join(', ')}',
         );
-        return viewModel..doIntent(
-          SubmitAnswersEvent(
-            result,
-            token:
-                provider.token!,
-          ),
-        );
+        return viewModel;
       },
       child: Scaffold(
         backgroundColor: AppColors.white,
@@ -67,9 +70,39 @@ class ExamScoreScreen extends StatelessWidget {
                 return CustomErrorWidget();
               } else if (!(state.checkAnswersResult!.isLoading ?? false) &&
                   state.checkAnswersResult?.data != null) {
-                final correctCount =
-                    state.checkAnswersResult!.data!.correctCount;
+                //======================================================================================================================
+              final correctCount = state.checkAnswersResult!.data!.correctCount;
 
+  
+//====================================================================================================
+                Map<String, SavedQuestionModel> savedMap = {};
+
+                for (var q in savedExam.savedQuestions!) {
+                  savedMap[q.qustionId] = q;
+                }
+
+                for (var item in state.checkAnswersResult!.data!.correctQuestions) {
+                                 
+                  var savedQ = savedMap[item.id.toString()];
+                  if (savedQ != null) {
+                    savedQ.trueAnswer = item.correctAnswer;
+                  }
+                }
+
+                for (var item in state.checkAnswersResult!.data!.wrongQuestions) {
+                  var savedQ = savedMap[item.id.toString()];
+                  if (savedQ != null) {
+                    if(savedQ.trueAnswer==null){
+                    savedQ.trueAnswer = item.correctAnswer;
+                    }
+                    
+                    savedQ.wrongAnswer = item.inCorrectAnswer;
+                  }
+                }
+
+
+                //======================================================================================================================
+                viewModel.doIntent(SaveExamInfo(examInfoModel: savedExam));
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

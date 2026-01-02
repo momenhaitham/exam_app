@@ -13,6 +13,7 @@ CorrectOrWrongQuestionResultDto _$CorrectOrWrongQuestionResultDtoFromJson(
   question: json['Question'] as String,
   correctAnswer: json['correctAnswer'] as String,
   answers: json['answers'] as Map<String, dynamic>?,
+  wrongAnswer: json['inCorrectAnswer'] as String?,
 );
 
 Map<String, dynamic> _$CorrectOrWrongQuestionResultDtoToJson(
@@ -21,5 +22,6 @@ Map<String, dynamic> _$CorrectOrWrongQuestionResultDtoToJson(
   'QID': instance.qid,
   'Question': instance.question,
   'correctAnswer': instance.correctAnswer,
+  'inCorrectAnswer': instance.wrongAnswer,
   'answers': instance.answers,
 };
