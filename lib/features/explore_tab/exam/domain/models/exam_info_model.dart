@@ -6,7 +6,6 @@ class ExamInfoModel {
   final int numberOfQuestions;
   final int? numberOfCorrectedQuestions;
   final String? id;
-  final List<String?>? answeredQuestions;
   final List<SavedQuestionModel>? savedQuestions;
 
   ExamInfoModel({
@@ -15,7 +14,6 @@ class ExamInfoModel {
     required this.numberOfQuestions,
     this.numberOfCorrectedQuestions,
     this.savedQuestions,
-    this.answeredQuestions,
     required this.id
   });
 }

@@ -15,7 +15,6 @@ class ExamInfoModelAdapter extends TypeAdapter<ExamInfoModel> {
       numberOfCorrectedQuestions: reader.read(),
       id: reader.readString(),
       savedQuestions: reader.readList().cast<SavedQuestionModel>(),
-      answeredQuestions: reader.readList().cast<String>()
     );
   }
 
@@ -27,6 +26,5 @@ class ExamInfoModelAdapter extends TypeAdapter<ExamInfoModel> {
     writer.write(obj.numberOfCorrectedQuestions);
     writer.writeString(obj.id??"");
     writer.writeList(obj.savedQuestions??[]);
-    writer.writeList(obj.answeredQuestions??[]);
   }
 }

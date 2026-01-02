@@ -71,32 +71,35 @@ class ExamScoreScreen extends StatelessWidget {
               } else if (!(state.checkAnswersResult!.isLoading ?? false) &&
                   state.checkAnswersResult?.data != null) {
                 //======================================================================================================================
+              final correctCount = state.checkAnswersResult!.data!.correctCount;
 
-                final correctCount = state.checkAnswersResult!.data!.correctCount;
+  
+//====================================================================================================
+                Map<String, SavedQuestionModel> savedMap = {};
 
+                for (var q in savedExam.savedQuestions!) {
+                  savedMap[q.qustionId] = q;
+                }
 
-                //if(state.checkAnswersResult!.data!.correctQuestions.isNotEmpty){
-                //}
-                //int allQuistions = state.checkAnswersResult!.data!.wrongQuestions.length+state.checkAnswersResult!.data!.correctQuestions.length;
-                
-                if(state.checkAnswersResult!.data!.wrongQuestions.isNotEmpty&&state.checkAnswersResult!.data!.correctQuestions.isNotEmpty){
-                for(int i=0;i<=state.checkAnswersResult!.data!.wrongQuestions.length-1;i++){
-                  savedExam.savedQuestions![i].wrongAnswer = state.checkAnswersResult?.data?.wrongQuestions[i].inCorrectAnswer;
+                for (var item in state.checkAnswersResult!.data!.correctQuestions) {
+                                 
+                  var savedQ = savedMap[item.id.toString()];
+                  if (savedQ != null) {
+                    savedQ.trueAnswer = item.correctAnswer;
+                  }
                 }
-                for(int i=0;i<=state.checkAnswersResult!.data!.correctQuestions.length-1;i++){
-                  savedExam.savedQuestions![i].trueAnswer = state.checkAnswersResult?.data?.correctQuestions[i].correctAnswer;
+
+                for (var item in state.checkAnswersResult!.data!.wrongQuestions) {
+                  var savedQ = savedMap[item.id.toString()];
+                  if (savedQ != null) {
+                    if(savedQ.trueAnswer==null){
+                    savedQ.trueAnswer = item.correctAnswer;
+                    }
+                    
+                    savedQ.wrongAnswer = item.inCorrectAnswer;
+                  }
                 }
-                }else if (state.checkAnswersResult!.data!.wrongQuestions.isEmpty&&state.checkAnswersResult!.data!.correctQuestions.isNotEmpty){
-                  for(int i=0;i<=state.checkAnswersResult!.data!.correctQuestions.length-1;i++){
-                  savedExam.savedQuestions![i].trueAnswer = state.checkAnswersResult?.data?.correctQuestions[i].correctAnswer;
-                }
-                }else if (state.checkAnswersResult!.data!.wrongQuestions.isNotEmpty&&state.checkAnswersResult!.data!.correctQuestions.isEmpty){
-                  for(int i=0;i<=state.checkAnswersResult!.data!.wrongQuestions.length-1;i++){
-                  savedExam.savedQuestions![i].wrongAnswer = state.checkAnswersResult?.data?.wrongQuestions[i].inCorrectAnswer;
-                  savedExam.savedQuestions![i].trueAnswer = state.checkAnswersResult?.data?.wrongQuestions[i].correctAnswer;
-                 }
-                }
-                
+
 
                 //======================================================================================================================
                 viewModel.doIntent(SaveExamInfo(examInfoModel: savedExam));

@@ -7,10 +7,10 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SavedQuestionCard extends StatelessWidget{
-  SavedQuestionCard({required this.savedQuestionModel,this.answer});
+  SavedQuestionCard({required this.savedQuestionModel});
 
   SavedQuestionModel savedQuestionModel;
-  String? answer;
+  
 
   int? answerKeyToIndex(String? answerKey){
     Map<String,dynamic> answers= {
@@ -26,7 +26,7 @@ class SavedQuestionCard extends StatelessWidget{
   Widget build(BuildContext context) {
   int? correctAnswerIndex = answerKeyToIndex(savedQuestionModel.trueAnswer!);
   int? inCorrectAnswerIndex = answerKeyToIndex(savedQuestionModel.wrongAnswer);
-
+  
   return Container(
         
         width: double.infinity,
@@ -56,7 +56,8 @@ class SavedQuestionCard extends StatelessWidget{
                 FormBuilderCheckboxGroup<String?>(
                   name: savedQuestionModel.question??"",
 
-                  //initialValue:savedQuestionModel.answers[correctAnswerIndex!]=null?[]:[savedQuestionModel.answers[correctAnswerIndex!]] ,
+                  initialValue:answerKeyToIndex(savedQuestionModel.trueAnswer??savedQuestionModel.trueAnswer)!=null?
+                  [savedQuestionModel.answers?[answerKeyToIndex(savedQuestionModel.trueAnswer??savedQuestionModel.trueAnswer)!]]:[] ,
                   enabled: false,
                   checkColor: Colors.blue,
                   
@@ -64,14 +65,18 @@ class SavedQuestionCard extends StatelessWidget{
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.zero,
                 ),
-                options: savedQuestionModel.answers.map((option) => FormBuilderFieldOption( 
+                options: savedQuestionModel.answers!.map((option) => FormBuilderFieldOption( 
                     value: option,
                     child: Container(
                       width: double.infinity,
                       padding: EdgeInsets.all(16),
                       margin: EdgeInsets.symmetric(vertical: 8),
                       decoration: BoxDecoration(
-                        color: option==savedQuestionModel.answers[correctAnswerIndex!]?Colors.green:option==savedQuestionModel.answers[inCorrectAnswerIndex!]?Colors.red:Colors.grey,
+                        color:_decideColor(falseAnswer:answerKeyToIndex(savedQuestionModel.wrongAnswer??savedQuestionModel.wrongAnswer)!=null?savedQuestionModel.answers![answerKeyToIndex(savedQuestionModel.wrongAnswer??savedQuestionModel.wrongAnswer)!]:null,
+                        passedAnswer: option ,
+                        trueAnswer:answerKeyToIndex(savedQuestionModel.trueAnswer??savedQuestionModel.trueAnswer)!=null?savedQuestionModel.answers![answerKeyToIndex(savedQuestionModel.trueAnswer??savedQuestionModel.trueAnswer)!]:null
+                        )
+                        ,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(option??"",style: AppStyles.ragular16Black,),
@@ -87,4 +92,23 @@ class SavedQuestionCard extends StatelessWidget{
       );
   }
   
+}
+
+Color _decideColor({String? trueAnswer,String? falseAnswer,String? passedAnswer}){
+if(falseAnswer !=null){
+  if(passedAnswer==falseAnswer){
+    return Colors.red;
+  }else if (passedAnswer==trueAnswer){
+    return Colors.green;
+  }else{
+    return Colors.grey;
+  }
+}else{
+   if (passedAnswer==trueAnswer){
+    return Colors.green;
+  }else{
+    return Colors.grey;
+  }
+}
+
 }

@@ -1,8 +1,9 @@
 class SavedQuestionModel {
   String? question;
-  List<String?> answers;
+  String qustionId;
+  List<String?>? answers;
   String? wrongAnswer;
   String? trueAnswer;
-  SavedQuestionModel({this.question,required this.answers,this.trueAnswer,this.wrongAnswer}){
+  SavedQuestionModel({this.question,this.answers,this.trueAnswer,this.wrongAnswer,required this.qustionId}){
   }
 }

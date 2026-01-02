@@ -12,8 +12,8 @@ class SavedQuestionModelAdapter extends TypeAdapter<SavedQuestionModel> {
       question: reader.readString(),
       trueAnswer: reader.readString(),
       wrongAnswer: reader.readString(),
-      answers: reader.readList().cast<String>()
-
+      answers: reader.readList().cast<String>(),
+      qustionId: reader.readString()
     );
   }
 
@@ -22,7 +22,7 @@ class SavedQuestionModelAdapter extends TypeAdapter<SavedQuestionModel> {
     writer.writeString(obj.question??"");
     writer.writeString(obj.trueAnswer??"");
     writer.writeString(obj.wrongAnswer??"");
-    writer.writeList(obj.answers);
-
+    writer.writeList(obj.answers??[]);
+    writer.writeString(obj.qustionId);
   }
 }

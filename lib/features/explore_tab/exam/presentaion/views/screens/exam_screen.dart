@@ -88,6 +88,7 @@ class _ExamScreenState extends State<ExamScreen> {
                         List<SavedQuestionModel> savedQuestions = questions.map((e){
                           List<String> answers = e.answers;
                           return SavedQuestionModel(
+                            qustionId: e.id,
                             question: e.questionText,
                             answers: answers
                         );}).toList();
@@ -100,7 +101,6 @@ class _ExamScreenState extends State<ExamScreen> {
                           numberOfQuestions: questions[0].examInfo.numberOfQuestions,
                           numberOfCorrectedQuestions: viewModel.answeredQuestions,
                           savedQuestions: savedQuestions,
-                          answeredQuestions: selectedAnswers.map((e) => e.correct,).toList()
                         );
                         Navigator.pop(context);
                         Navigator.pushReplacement(
@@ -255,6 +255,7 @@ class _ExamScreenState extends State<ExamScreen> {
                                   List<SavedQuestionModel> savedQuestions = questions.map((e){
                                     List<String> answers = e.answers;
                                     return SavedQuestionModel(
+                                    qustionId: e.id,  
                                     question: e.questionText,
                                     answers: answers
                                   );}).toList();
@@ -267,7 +268,6 @@ class _ExamScreenState extends State<ExamScreen> {
                                     numberOfQuestions: questions[0].examInfo.numberOfQuestions,
                                     numberOfCorrectedQuestions: viewModel.answeredQuestions,
                                     savedQuestions: savedQuestions,
-                                    answeredQuestions: selectedAnswers.map((e) => e.correct,).toList()
                                   );
                                   Navigator.pushReplacement(
                                     context,
