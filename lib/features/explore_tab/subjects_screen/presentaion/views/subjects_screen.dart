@@ -71,7 +71,7 @@ class SubjectsScreen extends StatelessWidget{
                     Text(AppErrors.someThingWentWrong),
                     ElevatedButton(onPressed: (){
                       viewModel.doIntent(GetallSubjectsEvent(),context: context);
-                    }, child: Text("try again"))
+                    }, child: Text(AppStrings.tryAgain))
                   ],
                 );
               }else{

@@ -58,5 +58,7 @@ class AppStrings {
   static const String startExam = "Start Exam";
   static const String tokin = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZmZjMGM3OGZiMTlhZDk1NWIyNDRlNSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzYzNjQ2MjExfQ.lZ1fx-1kkqfuTf-RZTA7TCSFVB9ZZaB7O9jxt8HBeIg";
   static const String noExamFound = "No exams found.";
-
+  static const String noQuestionsAvailable ="No Questions Available";
+  static const String tryAgain = "try again";
+  static const String noExamsFound = "No exams found.";
 }
